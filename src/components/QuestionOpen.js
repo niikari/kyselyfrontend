@@ -5,7 +5,6 @@ import SendAndArchiveIcon from '@mui/icons-material/SendAndArchive';
 
 export default function QuestionOpen(props) {
 
-    const [openAnswer, setOpenAnswer] = useState('')
     const [answer, setAnswer] = useState({})
     const [disabled, setDisabled] = useState(false)
 
@@ -18,16 +17,20 @@ export default function QuestionOpen(props) {
         .catch(err => console.error(err))
     }
 
-    // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN PARENTILLA OLEVAAN STATEEN ANNETTU VASTAUS
+    // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN PARENTILTA TULEVAAN STATEEN ANNETTU VASTAUS JA TALLENNETAAN VASTAUS
     const handleClick = () => {
-        setAnswer({...answer, "openAnswer": openAnswer})
         props.add(answer)
         setDisabled(true)       
     }
 
     return (
         <>
-        <TextField disabled={disabled} style={{ width: 500, marginBottom: 20 }} label="Vastauksesi..." onChange={(e) => setOpenAnswer(e.target.value)} />
+        <TextField 
+            disabled={disabled} 
+            style={{ width: 500, marginBottom: 20 }} 
+            label="Vastauksesi..." 
+            onChange={(e) => setAnswer({...answer, 'openAnswer': e.target.value})} 
+            />
         <Button startIcon={<SendAndArchiveIcon />} style={{ width: 150}} disabled={disabled} onClick={handleClick} variant="outlined">Vahvista</Button>
         </>
     )

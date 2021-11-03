@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import QuestionOpen from "./QuestionOpen";
 import QuestionMulti from "./QuestionMulti";
 import SendIcon from '@mui/icons-material/Send';
+import Loading from "./Loading";
 
 export default function Inquiry() {
 
@@ -15,6 +16,9 @@ export default function Inquiry() {
 
     const [questions, setQuestions] = useState([])
     const [maker, setMaker] = useState({})
+
+    // LADATAANKO KYSELYÄ VIELÄ
+    const [loading, setLoading] = useState(true)
 
     // KERÄTÄÄN VASTAUKSET (SISÄLTÄÄ MYÖS TIEDON KYSYMYKSESTÄ)
     const [answers, setAnswers] = useState([])
@@ -36,7 +40,10 @@ export default function Inquiry() {
     const fetchQuestions = (url) => {
         fetch(url)
         .then(res => res.json())
-        .then(data => setQuestions(data._embedded.questions))
+        .then(data => {
+            setQuestions(data._embedded.questions)
+            setLoading(false)
+        })
         .catch(err => console.error(err))
     }
 
@@ -61,6 +68,7 @@ export default function Inquiry() {
     // LÄHETETÄÄN BACKENDIIN => MAKER, KYSYMYS JA MAHDOLLINEN AVOIN VASTAUS (SIELLÄ LISÄTAULU VASTAAJAN VASTAUKSILLE)
     const postAnswers = (makerUrl) => {
         answers.forEach(function (answer, index) {
+            console.log(answer)
             fetch(`${url}/api/makerAnswers`, {
             method: 'POST',
             headers: {
@@ -84,6 +92,14 @@ export default function Inquiry() {
     // LISÄTÄÄN ANNETUT VASTAUKSET STATEEN
     const addNewAnswers = (answer) => {
         setAnswers([...answers, answer])
+    }
+    
+    while (loading) {
+        return (
+            <>
+            <Loading />
+            </>
+        )
     }
 
     return (
