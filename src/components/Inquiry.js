@@ -8,13 +8,18 @@ import QuestionOpen from "./QuestionOpen";
 import QuestionMulti from "./QuestionMulti";
 import SendIcon from '@mui/icons-material/Send';
 import Loading from "./Loading";
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Inquiry() {
 
-    // BACKENDIN OSOITE
+    // BACKENDIN OSOITE, TUOTANNOSSAHAN VAIHTUU
     const url = 'http://localhost:8080'
 
     const [questions, setQuestions] = useState([])
+
+    // TEKIJÄ, VIELÄ EI KÄYTETÄ MUTTA SITTEN KUN RAPORTTIA LÄHDETÄÄN TEKEMÄÄN TARVITAAN
     const [maker, setMaker] = useState({})
 
     // LADATAANKO KYSELYÄ VIELÄ
@@ -26,7 +31,37 @@ export default function Inquiry() {
     // LAITETAAN LÄHETYSNAPPI POIS KÄYTETTÄVISTÄ
     const [disabled, setDisabled] = useState(false)
 
-    useEffect(() => fetchInquiry(), [])
+    // SNACKBAR ALKAA
+    const [open, setOpen] = useState(false)
+
+    const handleClick = () => {
+        setOpen(true)
+    }
+    
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return
+        }
+    
+        setOpen(false)
+    }
+    
+    const action = (
+        <React.Fragment>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </React.Fragment>
+    )
+
+    // SNACKBAR LOPPUU
+
+    useEffect(() => fetchInquiry(), []) // TÄÄLTÄ TULEE VAROITUS (SAA POIS SIIRTÄMÄLLÄ FUNKTION SUORAAN TÄNNE)
 
     // HAETAAN ENSIN KYSELY
     const fetchInquiry = () => {
@@ -68,7 +103,6 @@ export default function Inquiry() {
     // LÄHETETÄÄN BACKENDIIN => MAKER, KYSYMYS JA MAHDOLLINEN AVOIN VASTAUS (SIELLÄ LISÄTAULU VASTAAJAN VASTAUKSILLE)
     const postAnswers = (makerUrl) => {
         answers.forEach(function (answer, index) {
-            console.log(answer)
             fetch(`${url}/api/makerAnswers`, {
             method: 'POST',
             headers: {
@@ -82,18 +116,19 @@ export default function Inquiry() {
             })
             .then(res => {
                 if (res.ok) {
-                    console.log("onnistui, viimeinkin....")
+                    setOpen(true)
                 }
             })
             .catch(err => console.error(err))
         })
     }
     
-    // LISÄTÄÄN ANNETUT VASTAUKSET STATEEN
+    // LISÄTÄÄN ANNETUT VASTAUKSET STATEEN. TÄMÄ FUNKTIO ANNETAAN CHILDIEN KÄYTTÖÖN
     const addNewAnswers = (answer) => {
         setAnswers([...answers, answer])
     }
     
+    // NÄYTETÄÄN LOADING KUNNES KYSYMYKSET ON LADATTU
     while (loading) {
         return (
             <>
@@ -111,13 +146,20 @@ export default function Inquiry() {
                <FormControl key={index} component="fieldset">
                 <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
                     {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} />}
-                    {question.multipleAnswers && <QuestionMulti />}
+                    {question.multipleAnswers && <QuestionMulti question={question} add={addNewAnswers} />}
                     {question.normQuestion && <Question question={question} add={addNewAnswers} />}
                 </FormControl> 
                 
             </Paper>)
         }
         <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="outlined">Lähetä vastaukset</Button>
+        <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        message="Vastaukset lähetetty onnistuneesti"
+        action={action}
+      />
         </div>
     )
 }
