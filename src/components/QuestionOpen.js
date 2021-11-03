@@ -1,0 +1,34 @@
+import React, { useEffect, useState } from "react";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SendAndArchiveIcon from '@mui/icons-material/SendAndArchive';
+
+export default function QuestionOpen(props) {
+
+    const [openAnswer, setOpenAnswer] = useState('')
+    const [answer, setAnswer] = useState({})
+    const [disabled, setDisabled] = useState(false)
+
+    useEffect(() => fetchAnswer(), [])
+
+    const fetchAnswer = () => {
+        fetch(props.question._links.answers.href)
+        .then(res => res.json())
+        .then(data => setAnswer(data._embedded.answers[0]))
+        .catch(err => console.error(err))
+    }
+
+    // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN PARENTILLA OLEVAAN STATEEN ANNETTU VASTAUS
+    const handleClick = () => {
+        setAnswer({...answer, "openAnswer": openAnswer})
+        props.add(answer)
+        setDisabled(true)       
+    }
+
+    return (
+        <>
+        <TextField disabled={disabled} style={{ width: 500, marginBottom: 20 }} label="Vastauksesi..." onChange={(e) => setOpenAnswer(e.target.value)} />
+        <Button startIcon={<SendAndArchiveIcon />} style={{ width: 150}} disabled={disabled} onClick={handleClick} variant="outlined">Vahvista</Button>
+        </>
+    )
+}
