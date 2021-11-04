@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function Inquiry() {
 
     // BACKENDIN OSOITE, TUOTANNOSSAHAN VAIHTUU
-    const url = 'https://kyselybackend123.herokuapp.com/'
+    const url = 'https://kyselybackend123.herokuapp.com'
 
     const [questions, setQuestions] = useState([])
 
