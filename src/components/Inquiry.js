@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function Inquiry() {
 
     // BACKENDIN OSOITE, TUOTANNOSSAHAN VAIHTUU
-    const url = 'http://localhost:8080'
+    const url = 'https://kyselybackend123.herokuapp.com/'
 
     const [questions, setQuestions] = useState([])
 
@@ -67,7 +67,7 @@ export default function Inquiry() {
     // HAETAAN ENSIN KYSELY
     const fetchInquiry = () => {
         // MÄÄRITELLÄÄN APP.JS -TIEDOSTOSSA (PROPS) MIKÄ PATTERISTO OTETAAN NÄYTILLE
-        fetch('http://localhost:8080/api/inquiries/1')
+        fetch(`${url}/api/inquiries/1`)
         .then(res => res.json())
         .then(data => fetchQuestions(data._links.questions.href))
     }
