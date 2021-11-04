@@ -31,7 +31,14 @@ export default function QuestionOpen(props) {
             label="Vastauksesi..." 
             onChange={(e) => setAnswer({...answer, 'openAnswer': e.target.value})} 
             />
-        <Button startIcon={<SendAndArchiveIcon />} style={{ width: 150}} disabled={disabled} onClick={handleClick} variant="outlined">Vahvista</Button>
+        <Button 
+            startIcon={<SendAndArchiveIcon />} 
+            style={{ width: 150}} 
+            disabled={disabled} 
+            onClick={handleClick} 
+            variant="outlined">
+                Vahvista
+        </Button>
         </>
     )
 }

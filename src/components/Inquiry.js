@@ -25,14 +25,15 @@ export default function Inquiry() {
     // LADATAANKO KYSELYÄ VIELÄ
     const [loading, setLoading] = useState(true)
 
-    // KERÄTÄÄN VASTAUKSET (SISÄLTÄÄ MYÖS TIEDON KYSYMYKSESTÄ)
+    // KERÄTÄÄN VASTAUKSET (SISÄLTÄÄ MYÖS TIEDON KYSYMYKSESTÄ JA KYSELYSTÄ)
     const [answers, setAnswers] = useState([])
 
-    // LAITETAAN LÄHETYSNAPPI POIS KÄYTETTÄVISTÄ
+    // LAITETAAN LÄHETYSNAPPI POIS KÄYTETTÄVISTÄ VASTAUSTEN LÄHETYSTEN JÄLKEEN
     const [disabled, setDisabled] = useState(false)
 
     // SNACKBAR ALKAA
     const [open, setOpen] = useState(false)
+    const [msg, setMsg] = useState('')
 
     const handleClick = () => {
         setOpen(true)
@@ -71,7 +72,7 @@ export default function Inquiry() {
         .then(data => fetchQuestions(data._links.questions.href))
     }
 
-    // HAETAAN TIETYN KYSELYN KYSYMYKSET
+    // HAETAAN SITTEN TIETYN KYSELYN KYSYMYKSET
     const fetchQuestions = (url) => {
         fetch(url)
         .then(res => res.json())
@@ -116,16 +117,25 @@ export default function Inquiry() {
             })
             .then(res => {
                 if (res.ok) {
+                    setMsg('Vastaukset lähetetty')
                     setOpen(true)
                 }
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                console.error(err)
+                setMsg('Hups, jokin meni pieleen...')
+            })
         })
     }
     
     // LISÄTÄÄN ANNETUT VASTAUKSET STATEEN. TÄMÄ FUNKTIO ANNETAAN CHILDIEN KÄYTTÖÖN
     const addNewAnswers = (answer) => {
         setAnswers([...answers, answer])
+    }
+
+    // JOS ANNETUT VASTAUKSET ON LISTA => LISÄTÄÄN NÄMÄ STATEEN
+    const addNewListOfAnswers = (arr) => {
+        setAnswers([...answers, ...arr])
     }
     
     // NÄYTETÄÄN LOADING KUNNES KYSYMYKSET ON LADATTU
@@ -141,12 +151,12 @@ export default function Inquiry() {
         <div style={{ marginTop: 20, textAlign: 'center' }}>
         {
             questions.map((question, index) =>
-            // TÄNNE IF LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTA)
+            // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
             <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
                <FormControl key={index} component="fieldset">
                 <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
                     {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} />}
-                    {question.multipleAnswers && <QuestionMulti question={question} add={addNewAnswers} />}
+                    {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} />}
                     {question.normQuestion && <Question question={question} add={addNewAnswers} />}
                 </FormControl> 
                 
@@ -157,7 +167,7 @@ export default function Inquiry() {
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
-        message="Vastaukset lähetetty onnistuneesti"
+        message={msg}
         action={action}
       />
         </div>

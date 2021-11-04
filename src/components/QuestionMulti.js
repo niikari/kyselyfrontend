@@ -23,13 +23,28 @@ export default function QuestionMulti(props) {
 
     // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN PARENTILLA OLEVAAN STATEEN ANNETTU VASTAUS
     const handleClick = () => {
-        props.add(chosenAnswers)
-        setDisabled(true)      
+        if (chosenAnswers.length > 0) {
+            props.add(chosenAnswers)
+            setDisabled(true)  
+        }        
+    }
+
+    // VASTAAJA KLIKKAA VALINNAN PÄÄLLE JA VALINNAN POIS 
+    const handleChange = (e, answer, index) => {
+        // VALINTA PÄÄLLE
+        if (e.target.checked) {
+            setChosenAnswers([...chosenAnswers, {...answer, index:index}])
+        }
+        // VALINTA POIS
+        if (e.target.checked === false) {
+            const arr = chosenAnswers.filter(ans => ans.index !== index)
+            setChosenAnswers(arr)
+        }
     }
 
     return (
         <>
-        <FormGroup>
+        <FormGroup >
             {
                 answers.map((answer, index) =>
                 <FormControlLabel 
@@ -37,11 +52,19 @@ export default function QuestionMulti(props) {
                     disabled={disabled}
                     label={answer.answer} 
                     value={answer}
-                    control={<Checkbox />} 
+                    control={<Checkbox /> }
+                    onChange={(e) => handleChange(e, answer, index)}
                     /> )
             }
         <br></br>
-        <Button startIcon={<SendAndArchiveIcon />} style={{ width: 150}} disabled={disabled} onClick={handleClick} variant="outlined">Vahvista</Button>
+        <Button 
+            startIcon={<SendAndArchiveIcon />} 
+            style={{ width: 150}} 
+            disabled={disabled} 
+            onClick={handleClick} 
+            variant="outlined">
+                Vahvista
+        </Button>
         </FormGroup>
         </>
     )
