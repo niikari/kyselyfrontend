@@ -22,7 +22,7 @@ export default function Question(props) {
         <div><h4>{props.question.quest}</h4>
         {answers.map((a, index) => 
         <ul key={index}><Answer answer={a}/></ul>
-        )}
+         )}
         </div>
     )
 }
