@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:8080/api/asnwers'
+const baseUrl = 'https://kyselybackend123.herokuapp.com/api/asnwers'
 
 const getAll = () => {
     const request = axios.get(baseUrl)
@@ -9,6 +9,11 @@ const getAll = () => {
 const getById = (id) => {
     const request = axios.get(`${baseUrl}/${id}`);
     return request.then(res => res.data);
+}
+
+const getByUrl = (url) => {
+  const request = axios.get(url);
+  return request.then(res => res.data);
 }
 
   const create = newObject => {
@@ -30,4 +35,4 @@ const getById = (id) => {
     return request.then(response => response.data);
   }
   
-  export default {getAll, create, deleteObject, modify, getById}
+  export default {getAll, create, deleteObject, modify, getById, getByUrl}

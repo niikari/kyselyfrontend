@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:8080/api/makers'
+const baseUrl = 'https://kyselybackend123.herokuapp.com/api/makers'
 
 const getAll = () => {
     const request = axios.get(baseUrl)
