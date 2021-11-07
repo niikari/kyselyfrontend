@@ -4,6 +4,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import SendAndArchiveIcon from '@mui/icons-material/SendAndArchive';
+import axios from 'axios'
 
 export default function Question(props) {
 
@@ -11,17 +12,21 @@ export default function Question(props) {
     const [answer, setAnswer] = useState({})
     const [disabled, setDisabled] = useState(false)
 
-    useEffect(() => fetchAnswers(), [])
 
-    // HAETAAN ANNETUN KYSYMYKSEN MAHDOLLISET VASTAUKSET
-    const fetchAnswers = () => {
-        fetch(props.question._links.answers.href)
-        .then(res => res.json())
-        .then(data => setAnswers(data._embedded.answers))
-        .catch(err => console.error(err))
-    }
+// HAETAAN ANNETUN KYSYMYKSEN MAHDOLLISET VASTAUKSET
+    useEffect(() => 
+    // hakee saadun tietyn kysymyksen vastaukset eli kysymysurl._links.answers.href
+    axios.get(props.question._links.answers.href)
+    //laittaa haetut kyseisen kyssärin vastaukset listana paikalliseen anwers constiin
+    .then(res => setAnswers(res.data._embedded.answers))
+    .catch(err => console.error(err))
+    
+    , [])
 
-    // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN PARENTILLA OLEVAAN STATEEN ANNETTU VASTAUS
+    
+
+
+    // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN INQUERYN ANSWER LISTAAN KYSEINEN VASTAUS
     const handleClick = () => {
         if (Object.keys(answer).length !== 0) {
             props.add(answer)
@@ -35,16 +40,20 @@ export default function Question(props) {
             aria-label={props.question.quest}
             name="radio-buttons-group"
             >
-        {
-            answers.map((answer, index) => 
+        {   
+            //tässä looppaa kaikki fetchillä saadut answerit ja käyttäjän  klikatessa tiettyä
+            //aswers listan answeria, lisätään se setAnswerilla paikalliseen konstiin.
+            answers.map((currentanswer, index) => 
                 <FormControlLabel 
-                    onChange={() => setAnswer(answer)} 
+                    onChange={() => setAnswer(currentanswer)} 
                     disabled={disabled}
                     key={index}
-                    value={answer.answer} 
+                    value={currentanswer.answer} 
                     control={<Radio />} 
-                    label={answer.answer} />
+                    label={currentanswer.answer} />
+                    
             )
+            
         }
         <br></br>
         <Button 

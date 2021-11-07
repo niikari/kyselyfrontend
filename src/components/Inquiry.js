@@ -11,6 +11,7 @@ import Loading from "./Loading";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import axios from "axios";
 
 export default function Inquiry() {
 
@@ -61,41 +62,41 @@ export default function Inquiry() {
     )
 
     // SNACKBAR LOPPUU
+//SELITYS KOKONAISUUS
+//HAETAAN QUERY JONKA SISÄLLÄ KYSYMYKSET
+//HAETAAN KYSYMYKSET QUESTIONS MUUTTUJAAN
+//PIIRRETÄÄN KÄYTTÄJÄLLE KYSELY, TAPAHTUU ANTAMALLA QUESTION KOMPONENTILLE PROPSINA TIEDOT KYSYMYKSISTÄ(LOOPATAAN TÄÄLLÄ)
+//GUESTION KOMPONENTTI HAKEE MAHDOLLISET VASTAUKSET ITESELLEEN JA PALAUTTAA KÄYTTÄJÄN VALITSEMAN VASTAUKSEN
+//INQUERY OTTAA VASTAAN VASTAUKSEN JA LAITTAA SEN TÄNNE ANSWER MUUTTUJAAN
+//LOPUSSA KÄYTTÄJÄ PALAUTTAA KYSELYN, LUODAAN MAKER OILIO JA LOOPATAAN KANTAAN NIIN MONTA POSTIA SAMALLA MAKER 
+//.. OLIOLLA KUN MAKERILLA ON VASTAUKSIA, JOTEN YHDELLÄ MAKERILLA ON KANNASSA MONTA ERI VASTAUSTA ERI KYSYMYKSIIN
 
-    useEffect(() => fetchInquiry(), []) // TÄÄLTÄ TULEE VAROITUS (SAA POIS SIIRTÄMÄLLÄ FUNKTION SUORAAN TÄNNE)
 
+    useEffect(() => 
     // HAETAAN ENSIN KYSELY
-    const fetchInquiry = () => {
-        // MÄÄRITELLÄÄN APP.JS -TIEDOSTOSSA (PROPS) MIKÄ PATTERISTO OTETAAN NÄYTILLE
-        fetch(`${url}/api/inquiries/1`)
-        .then(res => res.json())
-        .then(data => fetchQuestions(data._links.questions.href))
-    }
-
-    // HAETAAN SITTEN TIETYN KYSELYN KYSYMYKSET
-    const fetchQuestions = (url) => {
-        fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            setQuestions(data._embedded.questions)
+    axios.get(`${url}/api/inquiries/1`).then((response) => {  
+    //haetaan kyselyltä siihen liittyvät kysymykset
+        axios.get(response.data._links.questions.href)
+        .then(res=> {
+            setQuestions(res.data._embedded.questions)
             setLoading(false)
         })
         .catch(err => console.error(err))
-    }
+      }),[]) 
+
+    
+    
 
     // LUODAAN "MAKER-OLIO" 
     const postMakerAndAnswers = () => {
-        fetch(`${url}/api/makers`, {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/json'
-            },
+        axios.post(`${url}/api/makers`, {
             body: JSON.stringify({})
         })
-        .then(res => res.json())
-        .then(data => {
-            postAnswers(data._links.maker.href)
-            setMaker(data)
+        //kutsutaan postanswer funktiota luodun maker olion urlilla
+        //ja laitetaan setMakeriin koko luodun makerin url lista
+        .then(response => {
+            postAnswers(response.data._links.maker.href)
+            setMaker(response.data)
             setDisabled(true)
         })
         .catch(err => console.error(err))
@@ -104,19 +105,14 @@ export default function Inquiry() {
     // LÄHETETÄÄN BACKENDIIN => MAKER, KYSYMYS JA MAHDOLLINEN AVOIN VASTAUS (SIELLÄ LISÄTAULU VASTAAJAN VASTAUKSILLE)
     const postAnswers = (makerUrl) => {
         answers.forEach(function (answer, index) {
-            fetch(`${url}/api/makerAnswers`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+            axios.post(`${url}/api/makerAnswers`, {
+                // tallennetaan vastaus ja kuka vastas 
                 "openAnswer": answer.openAnswer,
                 "maker": makerUrl,
                 "answer": answer._links.self.href
             })
-            })
             .then(res => {
-                if (res.ok) {
+                if (res.data.ok) {
                     setMsg('Vastaukset lähetetty')
                     setOpen(true)
                 }
@@ -154,6 +150,9 @@ export default function Inquiry() {
             // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
             <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
                <FormControl key={index} component="fieldset">
+               {/* tässä looppaa koko questions listan läpi ja laittaa guestion[index] propsina
+               , Question komponentti palauttaa sitten kyseisen tietyn question[inndex]:in mahdolliset 
+               vastaukset */}
                 <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
                     {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} />}
                     {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} />}

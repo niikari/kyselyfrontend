@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendAndArchiveIcon from '@mui/icons-material/SendAndArchive';
+import axios from "axios";
 
 export default function QuestionOpen(props) {
 
     const [answer, setAnswer] = useState({})
     const [disabled, setDisabled] = useState(false)
 
-    useEffect(() => fetchAnswer(), [])
-
-    const fetchAnswer = () => {
-        fetch(props.question._links.answers.href)
-        .then(res => res.json())
-        .then(data => setAnswer(data._embedded.answers[0]))
-        .catch(err => console.error(err))
-    }
+    useEffect(() => 
+    // hakee saadun tietyn kysymyksen vastaukset eli kysymysurl._links.answers.href
+    axios.get(props.question._links.answers.href)
+    //laittaa haetut kyseisen kyssärin vastaukset listana paikalliseen anwers constiin
+    .then(res => setAnswer(res.data._embedded.answers[0]))
+    .catch(err => console.error(err))
+    
+    , [])
 
     // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN PARENTILTA TULEVAAN STATEEN ANNETTU VASTAUS JA TALLENNETAAN VASTAUS
     const handleClick = () => {
