@@ -11,11 +11,10 @@ const getById = (id) => {
     return request.then(res => res.data);
 }
 
-  const create = newObject => {
-    const request = axios.post(baseUrl, newObject);
-    console.log('newObject on');
-    console.log(newObject);
-    return request.then(response => console.log(response.data));
+  const create = () => {
+    const request = axios.post(baseUrl, {});
+    console.log('luodaan maker');
+    return request.then(response => response.data);
   }
   
   const deleteObject = id =>  {

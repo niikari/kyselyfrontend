@@ -1,26 +1,36 @@
 import React from 'react';
 import aService from '../services/answer';
-import NormAnswer from './normAnswer';
+import NormAnswer from './NormAnswer';
 import OpenAnswer from './OpenAnswer';
+import MultiAnswer from './MultiAnswer';
 
 export default function Question(props) {
 
     const [answers, setAnswers] = React.useState([]);
     const [currentAnswer, setCurrentAnswer] = React.useState({});
-
+    
   
+    const multiChange = (e, answer) => {
+        if (e.target.checked) {
+            props.setChosenAnswers((data) => [...data, answer]);
+        }
+        if (e.target.checked === false) {
+            console.log(`poistetaan ${answer}`)
+            deleteOldAnswer(answer);
+        }
+    }
 
     const answered = (answer) => {
         console.log(answer);
-        deleteOldAnswer();
+        deleteOldAnswer(currentAnswer);
         props.setChosenAnswers((data) => [...data, answer]);
         console.log(props.chosenAnswers);
         setCurrentAnswer(answer);
     }
 
-    const deleteOldAnswer = () => {
-        console.log('poistetaan '+ currentAnswer.answer);
-        props.setChosenAnswers(props.chosenAnswers.filter(answer => answer.answer !== currentAnswer.answer));
+    const deleteOldAnswer = (answer) => {
+        console.log('poistetaan '+ answer.answer);
+        props.setChosenAnswers(props.chosenAnswers.filter(data => data.answer !== answer.answer));
     }
 
     const getAnswers = () => {
@@ -41,7 +51,7 @@ export default function Question(props) {
             
             {props.question.openQuestion && <OpenAnswer answer={a} answered={answered}/>}
             {props.question.normQuestion && <NormAnswer answer={a} answered={answered}/>}
-            
+            {props.question.multipleAnswers && <MultiAnswer answer={a} answered={answered} multiChange={multiChange}/>}
             </ul>
          )}
         </div>

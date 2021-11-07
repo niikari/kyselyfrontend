@@ -10,6 +10,7 @@ export default function OpenAnswer(props) {
     }
 
     React.useEffect(() => setoAnswer(props.answer) ,[]);
+    React.useEffect(() => console.log(oAnswer) ,[oAnswer]);
 
     return(
         

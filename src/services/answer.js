@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'https://kyselybackend123.herokuapp.com/api/asnwers'
+const baseUrl = 'https://kyselybackend123.herokuapp.com/api/answers'
 
 const getAll = () => {
     const request = axios.get(baseUrl)
@@ -16,11 +16,12 @@ const getByUrl = (url) => {
   return request.then(res => res.data);
 }
 
-  const create = newObject => {
-    const request = axios.post(baseUrl, newObject);
-    console.log('newObject on');
+  const create = (url, newObject) => {
+    const request = axios.post(url, newObject);
+    console.log('vastaus makerille');
+    console.log(url);
     console.log(newObject);
-    return request.then(response => console.log(response.data));
+    return request.then(response => response.data);
   }
   
   const deleteObject = id =>  {
