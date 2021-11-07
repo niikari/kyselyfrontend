@@ -10,6 +10,6 @@ export default function NormAnswer(props) {
                     value={props.answer.answer} 
                     control={<Radio />} 
                     label={props.answer.answer} />
-            )
+            ) 
     
 }
