@@ -1,23 +1,26 @@
 import React from 'react';
 import aService from '../services/answer';
-import Answer from './Answer';
-
+import NormAnswer from './normAnswer';
+import OpenAnswer from './OpenAnswer';
 
 export default function Question(props) {
 
     const [answers, setAnswers] = React.useState([]);
     const [currentAnswer, setCurrentAnswer] = React.useState({});
 
+  
+
     const answered = (answer) => {
-        
-        props.setChosenAnswers(chosenAnswers => [...chosenAnswers, answer]);
+        console.log(answer);
+        deleteOldAnswer();
+        props.setChosenAnswers((data) => [...data, answer]);
         console.log(props.chosenAnswers);
         setCurrentAnswer(answer);
     }
 
     const deleteOldAnswer = () => {
         console.log('poistetaan '+ currentAnswer.answer);
-        props.setChosenAnswers(props.chosenAnswers.filter(answer => answer.anwer !== currentAnswer.answer));
+        props.setChosenAnswers(props.chosenAnswers.filter(answer => answer.answer !== currentAnswer.answer));
     }
 
     const getAnswers = () => {
@@ -28,6 +31,7 @@ export default function Question(props) {
     }
 
     React.useEffect(() => getAnswers(), [])
+    React.useEffect(() =>  console.log(props.chosenAnswers),[props.chosenAnswers]);
 
     return(
         
@@ -35,7 +39,8 @@ export default function Question(props) {
         {answers.map((a, index) => 
         <ul key={index}>
             
-            <Answer i={index} answer={a} answered={answered}/>
+            {props.question.openQuestion && <OpenAnswer answer={a} answered={answered}/>}
+            {props.question.normQuestion && <NormAnswer answer={a} answered={answered}/>}
             
             </ul>
          )}

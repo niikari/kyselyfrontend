@@ -29,8 +29,8 @@ const getQuestions = (url) => {
     qService
     .getByUrl(url)
     .then(data => {
-        console.log(data._embedded.questions)
-        setQuestions(data._embedded.questions)
+        console.log(data._embedded.questions);
+        setQuestions(data._embedded.questions);
         })
     .catch(error => console.error(error));
 }
@@ -42,14 +42,15 @@ return(
         {questions.map((q, index) =>
         <ul key={index}>
             
-            <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
+            <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }}  elevation={3} key={index}>
                <FormControl key={index} component="fieldset">
                 
-                    {q.openQuestion && <p>open question</p>}
+                    {q.openQuestion && <Question question={q}  setChosenAnswers={setChosenAnswers} chosenAnswers={chosenAnswers}/>}
                     {q.multipleAnswers && <p>multiple answer question</p>}
-                    {q.normQuestion && <RadioGroup>
+                    {q.normQuestion && 
+                    <RadioGroup>
                         <Question question={q}  setChosenAnswers={setChosenAnswers} chosenAnswers={chosenAnswers}/>
-                        </RadioGroup>
+                    </RadioGroup>
                     }
                 </FormControl> 
             </Paper>
