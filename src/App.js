@@ -14,7 +14,7 @@ function App() {
             Ohjelmistoprojekti kysely
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar>      
       <Inquiry />
     </div>
   );

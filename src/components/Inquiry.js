@@ -11,6 +11,7 @@ import Loading from "./Loading";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Report from "./Reports";
 
 export default function Inquiry() {
 
@@ -170,6 +171,7 @@ export default function Inquiry() {
         message={msg}
         action={action}
       />
+      {disabled && <Report maker={maker} url={url}/>}
         </div>
     )
 }
