@@ -34,22 +34,23 @@ export default function Inqueries() {
     <div>
         {
         inqueries.map((inquiryx, index) =>
-            < >
-                <FormControlLabel  
-                control={<Switch  checked={isChecked} onChange={() => {
-                setIsChecked((prev) => !prev);}} />}  />
-                
-                    <Collapse in={isChecked}>
-                    
-                            <Paper key={index}>
-                            <FormControl key={index} component="fieldset">
-                                    <FormLabel component="legend"><b>kysely</b></FormLabel><br></br>
-                                    {fetched===false && <Loading />}
-                                    {fetched && <Inquiry url={inquiryx._links.inquiry.href}></Inquiry>}
-                                        
-                                </FormControl> 
-                            </Paper>
-                    </Collapse>
+            <>
+                          <div style={{ width: '30%', margin: 'auto', textAlign:'left' }}>
+                            Tee tämä kysely 
+                            <Switch  checked={isChecked} onChange={() => {
+                            setIsChecked((prev) => !prev);}} ></Switch>
+                          </div>
+                      <Paper  style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} key={index}>
+                      
+                              <FormLabel component="legend"><b>kysely</b></FormLabel><br></br>
+                  
+                              <Collapse in={isChecked}>
+                              {fetched && <Inquiry url={inquiryx._links.inquiry.href}></Inquiry>}
+                              </Collapse>
+                  
+                      </Paper>
+                          
+                      {fetched===false && <Loading />}
             </>
                 )
         }

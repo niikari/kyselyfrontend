@@ -73,15 +73,15 @@ export default function PrimarySearchAppBar() {
 
 
 <BrowserRouter>
-<div className="topnav">
-    <Link to="/inquiries"> inquiries </Link>
-    <Link to="/results">results</Link>
-</div>
+
   <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static">
       <Toolbar>
                   <Typography>
-                    
+                    <div className="topnav">
+                      <Link to="/inquiries"> inquiries </Link>
+                      <Link to="/results">results</Link>
+                    </div>
 
                   </Typography>
                   <Search>
