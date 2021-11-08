@@ -55,7 +55,7 @@ export default function Question(props) {
             disabled={disabled} 
             onClick={handleClick} 
             variant="outlined">
-                Send
+                Vahvista
         </Button>
         </RadioGroup>
         
