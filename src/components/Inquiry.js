@@ -12,6 +12,8 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
+import Switch from '@material-ui/core/Switch';
+import Collapse from '@material-ui/core/Collapse';
 
 export default function Inquiry(props) {
 
@@ -19,6 +21,8 @@ export default function Inquiry(props) {
     const url = 'https://kyselybackend123.herokuapp.com'
     const urli = props.url;
 
+    const [isChecked, setIsChecked] = React.useState(false);
+    
     const [questions, setQuestions] = useState([])
 
     // TEKIJÄ, VIELÄ EI KÄYTETÄ MUTTA SITTEN KUN RAPORTTIA LÄHDETÄÄN TEKEMÄÄN TARVITAAN
@@ -146,8 +150,19 @@ export default function Inquiry(props) {
     }
 
     return (
+    
         <div style={{ marginTop: 20, textAlign: 'center' }}>
+        
+        <div>
+            Tee tämä kysely 
+            <Switch  checked={isChecked} onChange={() => {
+            setIsChecked((prev) => !prev);}} ></Switch>
+        </div>
+
+        
+        <Collapse in={isChecked}>
         {
+            
             questions.map((question, index) =>
             // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
             <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
@@ -161,7 +176,9 @@ export default function Inquiry(props) {
                     {question.normQuestion && <Question question={question} add={addNewAnswers} />}
                 </FormControl> 
                 
-            </Paper>)
+            </Paper>
+            
+            )
         }
         <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="outlined">Lähetä vastaukset</Button>
         <Snackbar
@@ -171,6 +188,7 @@ export default function Inquiry(props) {
         message={msg}
         action={action}
       />
+      </Collapse>
         </div>
     )
 }

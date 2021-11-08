@@ -15,7 +15,7 @@ export default function Inqueries() {
    const[fetched, setFetched]=React.useState(false);
    const[inqueries, setQuery]=React.useState([]);
    const[inquiryurl, setInquiryurl]= React.useState("");
-   const [isChecked, setIsChecked] = React.useState(false);
+   
    
    useEffect(() => 
    // HAETAAN ENSIN KYSELYT
@@ -35,18 +35,14 @@ export default function Inqueries() {
         {
         inqueries.map((inquiryx, index) =>
             <>
-                          <div style={{ width: '30%', margin: 'auto', textAlign:'left' }}>
-                            Tee tämä kysely 
-                            <Switch  checked={isChecked} onChange={() => {
-                            setIsChecked((prev) => !prev);}} ></Switch>
-                          </div>
-                      <Paper  style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} key={index}>
-                      
-                              <FormLabel component="legend"><b>kysely</b></FormLabel><br></br>
+                          
+                      <Paper  style={{ width: '60%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} key={index}>
+                          
+                              <FormLabel component="legend"><b>kysely: {inquiryx._links.inquiry.href}</b></FormLabel><br></br>
                   
-                              <Collapse in={isChecked}>
+                               
                               {fetched && <Inquiry url={inquiryx._links.inquiry.href}></Inquiry>}
-                              </Collapse>
+                              
                   
                       </Paper>
                           
