@@ -13,10 +13,11 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 
-export default function Inquiry() {
+export default function Inquiry(props) {
 
     // BACKENDIN OSOITE, TUOTANNOSSAHAN VAIHTUU
     const url = 'https://kyselybackend123.herokuapp.com'
+    const urli = props.url;
 
     const [questions, setQuestions] = useState([])
 
@@ -74,12 +75,13 @@ export default function Inquiry() {
 
     useEffect(() => 
     // HAETAAN ENSIN KYSELY
-    axios.get(`${url}/api/inquiries/1`).then((response) => {  
+    axios.get(`${urli}`).then((response) => {  
     //haetaan kyselyltä siihen liittyvät kysymykset
         axios.get(response.data._links.questions.href)
         .then(res=> {
             setQuestions(res.data._embedded.questions)
             setLoading(false)
+            
         })
         .catch(err => console.error(err))
       }),[]) 
