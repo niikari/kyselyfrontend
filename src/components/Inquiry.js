@@ -95,22 +95,30 @@ export default function Inquiry(props) {
 
     // LUODAAN "MAKER-OLIO" 
     const postMakerAndAnswers = () => {
-        axios.post(`${url}/api/makers`, {
-            body: JSON.stringify({})
-        })
-        //kutsutaan postanswer funktiota luodun maker olion urlilla
-        //ja laitetaan setMakeriin koko luodun makerin url lista
-        .then(response => {
-            postAnswers(response.data._links.maker.href)
-            setMaker(response.data)
-            setDisabled(true)
-        })
-        .catch(err => console.error(err))
-    }
+        console.log(answers.length)
+        console.log(questions.length)
+        if(answers.length<questions.length){alert("Tallenna vastauksesi ensin")}
+        else{
+                axios.post(`${url}/api/makers`, {
+                    body: JSON.stringify({})
+                })
+                //kutsutaan postanswer funktiota luodun maker olion urlilla
+                //ja laitetaan setMakeriin koko luodun makerin url lista
+                .then(response => {
+                    console.log("EKASSA FUNKTIOSSA")
+                    postAnswers(response.data._links.maker.href)
+                    setMaker(response.data)
+                    setDisabled(true)
+                })
+                .catch(err => console.error(err))
+                }
+            }
 
     // LÄHETETÄÄN BACKENDIIN => MAKER, KYSYMYS JA MAHDOLLINEN AVOIN VASTAUS (SIELLÄ LISÄTAULU VASTAAJAN VASTAUKSILLE)
     const postAnswers = (makerUrl) => {
+        
         answers.forEach(function (answer, index) {
+            
             axios.post(`${url}/api/makerAnswers`, {
                 // tallennetaan vastaus ja kuka vastas 
                 "openAnswer": answer.openAnswer,
@@ -118,9 +126,10 @@ export default function Inquiry(props) {
                 "answer": answer._links.self.href
             })
             .then(res => {
-                if (res.data.ok) {
+                if (res.status===201 || res.status===200) {
                     setMsg('Vastaukset lähetetty')
                     setOpen(true)
+                
                 }
             })
             .catch(err => {

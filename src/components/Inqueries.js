@@ -37,13 +37,8 @@ export default function Inqueries() {
             <>
                           
                       <Paper  style={{ width: '60%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} key={index}>
-                          
                               <FormLabel component="legend"><b>kysely: {inquiryx._links.inquiry.href}</b></FormLabel><br></br>
-                  
-                               
                               {fetched && <Inquiry url={inquiryx._links.inquiry.href}></Inquiry>}
-                              
-                  
                       </Paper>
                           
                       {fetched===false && <Loading />}
