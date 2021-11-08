@@ -97,22 +97,25 @@ export default function Inquiry(props) {
     const postMakerAndAnswers = () => {
         console.log(answers.length)
         console.log(questions.length)
-        if(answers.length<questions.length){alert("Tallenna vastauksesi ensin")}
-        else{
-                axios.post(`${url}/api/makers`, {
-                    body: JSON.stringify({})
-                })
-                //kutsutaan postanswer funktiota luodun maker olion urlilla
-                //ja laitetaan setMakeriin koko luodun makerin url lista
-                .then(response => {
-                    console.log("EKASSA FUNKTIOSSA")
-                    postAnswers(response.data._links.maker.href)
-                    setMaker(response.data)
-                    setDisabled(true)
-                })
-                .catch(err => console.error(err))
+        if(answers.length<questions.length){
+            setMsg("Tallenna vastauksesi ensin") 
+            setOpen(true)
                 }
-            }
+                else{
+                    axios.post(`${url}/api/makers`, {
+                        body: JSON.stringify({})
+                    })
+                    //kutsutaan postanswer funktiota luodun maker olion urlilla
+                    //ja laitetaan setMakeriin koko luodun makerin url lista
+                    .then(response => {
+                        console.log("EKASSA FUNKTIOSSA")
+                        postAnswers(response.data._links.maker.href)
+                        setMaker(response.data)
+                        setDisabled(true)
+                    })
+                    .catch(err => console.error(err))
+                    }
+                }
 
     // LÄHETETÄÄN BACKENDIIN => MAKER, KYSYMYS JA MAHDOLLINEN AVOIN VASTAUS (SIELLÄ LISÄTAULU VASTAAJAN VASTAUKSILLE)
     const postAnswers = (makerUrl) => {
