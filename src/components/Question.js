@@ -6,10 +6,12 @@ import MultiAnswer from './MultiAnswer';
 
 export default function Question(props) {
 
+    //muuttujat vastaukset ja nykyiset vastaukset. Muuttujaa nykyiset vastaukset
+    //käytetään kun vastaus muuttuu ja vanhat vastaukset pitää poistaa
     const [answers, setAnswers] = React.useState([]);
     const [currentAnswer, setCurrentAnswer] = React.useState({});
     
-  
+    //monivalinta kysymyksessä
     const multiChange = (e, answer) => {
         if (e.target.checked) {
             props.setChosenAnswers((data) => [...data, answer]);
@@ -20,6 +22,7 @@ export default function Question(props) {
         }
     }
 
+    //muissa kysymyksissä 
     const answered = (answer) => {
         console.log(answer);
         deleteOldAnswer(currentAnswer);

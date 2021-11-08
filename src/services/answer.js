@@ -16,11 +16,18 @@ const getByUrl = (url) => {
   return request.then(res => res.data);
 }
 
-  const create = (url, newObject) => {
+  const createMakersAnswer = (url, newObject) => {
     const request = axios.post(url, newObject);
     console.log('vastaus makerille');
     console.log(url);
     console.log(newObject);
+    return request.then(response => response.data);
+  }
+
+  
+  const create = () => {
+    const request = axios.post(baseUrl, {});
+    console.log('luodaan answer');
     return request.then(response => response.data);
   }
   
@@ -36,4 +43,4 @@ const getByUrl = (url) => {
     return request.then(response => response.data);
   }
   
-  export default {getAll, create, deleteObject, modify, getById, getByUrl}
+  export default {getAll, create, deleteObject, modify, getById, getByUrl, createMakersAnswer}

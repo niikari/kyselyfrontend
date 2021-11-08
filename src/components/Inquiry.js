@@ -13,14 +13,14 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 export default function Inquiry() {
 
-
+//muuttujat kysymykset ja valitut vastaukset. valitut vastaukset
+//lähetetään tietokantaan, kun maker on tehty
 const [questions, setQuestions] = React.useState([]); 
 const [chosenAnswers, setChosenAnswers] = React.useState([]);
 
-
 React.useEffect(() => getInquiry() ,[]);
 
-
+//haetaan kysely
 const getInquiry = () => {
     iService
     .getById(1)
@@ -30,6 +30,7 @@ const getInquiry = () => {
     .catch(error => console.error(error));
 }
 
+//haetaan kysymykset kyselyn urlilla
 const getQuestions = (url) => {
     console.log(url)
     qService
@@ -41,16 +42,19 @@ const getQuestions = (url) => {
     .catch(error => console.error(error));
 }
 
+//nappia painamalla luodaan maker
 const postMaker = () => {
     makerService
     .create()
     .then(data => {
-        console.log('data:' + data)
+        console.log('data:' + data);
+        //kutsutaan alempi funktio 
         postAnswers(data._links.maker.href);
     })
     .catch(error => console.error(error));
 }
 
+//postataan makerin vastaukset 
 const postAnswers = (url) => {
     console.log(url);
     chosenAnswers.forEach(a => {
@@ -63,7 +67,7 @@ const postAnswers = (url) => {
         console.log(aPost);
 
         answerService
-        .create(`https://kyselybackend123.herokuapp.com/api/makerAnswers`, aPost)
+        .createMakersAnswer(`https://kyselybackend123.herokuapp.com/api/makerAnswers`, aPost)
         .then(data => console.log(`posted answer ${data}`))
         .catch(error => console.error(error));
     });
@@ -104,4 +108,3 @@ return(
 )
 }
 
-{/* <Question question={q} setChosenAnswers={setChosenAnswers}/> */}
