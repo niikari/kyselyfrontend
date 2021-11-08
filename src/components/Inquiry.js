@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import { RadioGroup } from '@mui/material';
 import makerService from '../services/maker';
 import answerService from '../services/answer';
-import answer from '../services/answer';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 export default function Inquiry() {
 
@@ -67,6 +67,8 @@ const postAnswers = (url) => {
         .then(data => console.log(`posted answer ${data}`))
         .catch(error => console.error(error));
     });
+
+   
 }
 
 
@@ -97,7 +99,7 @@ return(
             </ul>
         )}
 
-        <Button onClick={postMaker}>lähetä</Button>
+        <Button startIcon={<AddCircleRoundedIcon/>} variant="contained" onClick={postMaker}>lähetä</Button>
     </div>
 )
 }
