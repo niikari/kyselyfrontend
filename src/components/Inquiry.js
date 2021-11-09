@@ -13,10 +13,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Report from "./Reports";
 
-export default function Inquiry() {
+export default function Inquiry(props) {
 
     // BACKENDIN OSOITE, TUOTANNOSSAHAN VAIHTUU
-    const url = 'https://kyselybackend123.herokuapp.com'
+    // const url = 'https://kyselybackend123.herokuapp.com'
+
+    const url = props.url
 
     const [questions, setQuestions] = useState([])
 
@@ -63,15 +65,14 @@ export default function Inquiry() {
 
     // SNACKBAR LOPPUU
 
-    useEffect(() => fetchInquiry(), []) // TÄÄLTÄ TULEE VAROITUS (SAA POIS SIIRTÄMÄLLÄ FUNKTION SUORAAN TÄNNE)
-
     // HAETAAN ENSIN KYSELY
-    const fetchInquiry = () => {
-        // MÄÄRITELLÄÄN APP.JS -TIEDOSTOSSA (PROPS) MIKÄ PATTERISTO OTETAAN NÄYTILLE
-        fetch(`${url}/api/inquiries/1`)
+    // MÄÄRITELLÄÄN SELECTINQUIRY.JS -TIEDOSTOSSA (PROPS) MIKÄ PATTERISTO OTETAAN NÄYTILLE
+    useEffect(() => {
+        console.log(props.inquiry._links.inquiry.href)
+        fetch(props.inquiry._links.inquiry.href)
         .then(res => res.json())
         .then(data => fetchQuestions(data._links.questions.href))
-    }
+    }, [])
 
     // HAETAAN SITTEN TIETYN KYSELYN KYSYMYKSET
     const fetchQuestions = (url) => {
@@ -143,7 +144,7 @@ export default function Inquiry() {
     while (loading) {
         return (
             <>
-            <Loading />
+            <Loading msg={"Ladataan kysymyksiä"} />
             </>
         )
     }
