@@ -8,10 +8,10 @@ import SelectInquiry from "./components/SelectInquiry";
 function App() {
 
   // PALVELIMEN OSOITE (PAIKALLINEN)
-  const url = "http://localhost:8080"
+  // const url = "http://localhost:8080"
 
   // PILVESSÄ
-  // const url = 'https://kyselybackend123.herokuapp.com'
+  const url = 'https://kyselybackend123.herokuapp.com'
 
   return (
     <div className="App">
