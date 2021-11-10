@@ -23,9 +23,8 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>  
-      < Results />
       <SelectInquiry url={url}/>  
-      
+      < Results />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Chart from "react-google-charts";
 export default function Results(props) {
 
   return (
-    <div className="App">
+    <div className="Kaavio">
       <Chart
         width={'800px'}
         height={'400px'}
