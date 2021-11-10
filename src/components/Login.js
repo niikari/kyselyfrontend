@@ -60,12 +60,13 @@ export default function Login(props) {
     return (
         <>
         <Button
-        id="basic-button"
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
+            id="basic-button"
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            variant="outlined"
+        >
         Login
         </Button>
         <Menu

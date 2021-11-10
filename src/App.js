@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Inquiry from "./components/Inquiry";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,18 +7,40 @@ import SelectInquiry from "./components/SelectInquiry";
 import Box from '@mui/material/Box';
 import Login from './components/Login';
 import Button from '@mui/material/Button';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import NewInquiry from "./components/NewInquiry";
 
 function App() {
 
   // PALVELIMEN OSOITE (PAIKALLINEN)
   const url = "http://localhost:8080"
+  // PALVELIMEN OSOITE PILVESSÄ
+  // const url = 'https://kyselybackend123.herokuapp.com'
 
   const [auth, setAuth] = useState(false)
 
-  // PILVESSÄ
-  // const url = 'https://kyselybackend123.herokuapp.com'
+  // KATSO ONKO KIRJAUDUTTU
+  useEffect(() => {
+    if (sessionStorage.getItem('jwt') !== null) {
+      setAuth(true)
+    }
+  }, [])
 
-  
+  const changeAuth = () => {
+    setAuth(true)
+  }
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('jwt')
+    setAuth(false)
+  }
+
+    
   return (
     <div className="App">
       <Box sx={{ flexGrow: 1 }}>
@@ -27,11 +49,13 @@ function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Ohjelmistoprojekti kysely
             </Typography>
-            <Login url={url} />
-            {auth && <Button>Logout</Button>}
+            
+            {auth === false && <Login url={url} changeAuth={changeAuth} />}
+            {auth && <Button variant="outlined" color="error" onClick={handleLogout} style={{ marginLeft: 10 }}>Logout</Button>}
           </Toolbar>
         </AppBar>
       </Box> 
+      {auth && <NewInquiry />}
       <SelectInquiry url={url} />
     </div>
   );
