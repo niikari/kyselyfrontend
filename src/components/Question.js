@@ -34,7 +34,7 @@ export default function Question(props) {
     const deleteOldAnswer = (answer) => {
         console.log('poistetaan '+ answer.answer);
         props.setChosenAnswers(props.chosenAnswers.filter(data => data.answer !== answer.answer));
-    }
+    } 
 
     const getAnswers = () => {
         aService
