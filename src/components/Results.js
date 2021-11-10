@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import ReactDOM from "react-dom";
 import Chart from "react-google-charts";
 
+export default function Results(props) {
+
+useEffect(() => {
+    fetchQuestion()
+
+    fetchAnswers()
+}, [])
+
+
+const fetchQuestion = () => {
+        
+}
+
+const fetchAnswers = () => {
+
+}
 class Results extends React.Component {
-  
+
   render() {
     return (
       <div className="App">
@@ -31,4 +48,4 @@ class Results extends React.Component {
   }
 }
 
-export default Results;
+}
