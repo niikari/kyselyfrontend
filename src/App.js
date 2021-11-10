@@ -4,14 +4,15 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SelectInquiry from "./components/SelectInquiry";
+import Results from "./components/Results";
 
 function App() {
 
   // PALVELIMEN OSOITE (PAIKALLINEN)
-  const url = "http://localhost:8080"
+  // const url = "http://localhost:8080"
 
   // PILVESSÄ
-  // const url = 'https://kyselybackend123.herokuapp.com'
+  const url = 'https://kyselybackend123.herokuapp.com'
 
   return (
     <div className="App">
@@ -22,7 +23,9 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>  
+      < Results />
       <SelectInquiry url={url}/>  
+      
     </div>
   );
 }
