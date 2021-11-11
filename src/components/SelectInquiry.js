@@ -54,9 +54,8 @@ export default function SelectInquiry(props) {
             >
             <Paper elevation={3}>
                 <p>Nimi: <b>{inquiry.name}</b></p>
-                <Button onClick={() => handleSelection(inquiry)} variant="outlined">Aloita suorittaminen</Button><br></br>
-                {/* JOS KIRJAUTUNEENA ADMIN NIIN NÄKYISI MYÖS MUOKKAUS JA UUDEN LUOMINEN */}
-                <Button style={{ marginTop: 10, marginBottom: 20}} color="warning" variant="outlined">Muokkaa</Button>
+                <Button onClick={() => handleSelection(inquiry)} style={{marginBottom:10}} variant="outlined">Aloita suorittaminen</Button><br></br>
+                
             </Paper>
             </Box>)
         }
