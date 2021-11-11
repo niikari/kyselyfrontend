@@ -16,17 +16,7 @@ import NewInquiry from "./components/NewInquiry";
 
 function App() {
 
-  // PALVELIMEN OSOITE (PAIKALLINEN)
-<<<<<<< HEAD
-  // const url = "http://localhost:8080"
-
-  // PILVESSÄ
   const url = 'https://kyselybackend123.herokuapp.com'
-=======
-  const url = "http://localhost:8080"
-  // PALVELIMEN OSOITE PILVESSÄ
-  // const url = 'https://kyselybackend123.herokuapp.com'
->>>>>>> oma_login
 
   const [auth, setAuth] = useState(false)
 
