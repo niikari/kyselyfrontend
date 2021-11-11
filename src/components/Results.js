@@ -4,25 +4,31 @@ import Chart from "react-google-charts";
 
 export default function Results(props) {
 
+  const options = {
+    title: "My daily activities",
+    is3D: true,
+    hAxis: { title: "Age", viewWindow: { min: 0, max: 15 } },
+    vAxis: { title: "Weight", viewWindow: { min: 0, max: 15 } },
+  };
+
+  const data = [
+    ['Task', 'Hours per Day'],
+    ['Work', 11],
+    ['Eat', 2],
+    ['Commute', 2],
+    ['Watch TV', 2],
+    ['Sleep', 7],
+  ];
+  
   return (
-    <div className="Kaavio">
+    <div className="Chart">
       <Chart
         width={'800px'}
         height={'400px'}
         chartType="PieChart"
         loader={<div>Loading Chart</div>}
-        data={[
-            ['Pizza', 'Popularity'],
-            ['Pepperoni', 33],
-            ['Hawaiian', 26],
-            ['Mushroom', 22],
-            ['Sausage', 10], // Below limit.
-            ['Anchovies', 9], // Below limit.
-        ]}
-        options={{
-        title: 'Popularity of Types of Pizza',
-        sliceVisibilityThreshold: 0.05, // 20%
-        }}
+        data={data}
+        options={options}
         rootProps={{ 'data-testid': '7' }}
         />
     </div>
