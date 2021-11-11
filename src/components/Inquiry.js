@@ -3,13 +3,17 @@ import iService from '../services/inquiry';
 import qService from '../services/question';
 import Question from './Question';
 import Button from '@mui/material/Button';
-import FormGroup from '@mui/material/FormGroup';
-import FormControl from '@mui/material/FormControl';
 import Paper from '@mui/material/Paper';
-import { RadioGroup } from '@mui/material';
 import makerService from '../services/maker';
 import answerService from '../services/answer';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.min.css'
+import FormGroup from '@mui/material/FormGroup';
+import FormControl from '@mui/material/FormControl';
+import { RadioGroup } from '@mui/material';
+
+
 
 export default function Inquiry() {
 
@@ -19,6 +23,8 @@ const [questions, setQuestions] = React.useState([]);
 const [chosenAnswers, setChosenAnswers] = React.useState([]);
 
 React.useEffect(() => getInquiry() ,[]);
+React.useEffect(() => console.log(chosenAnswers) ,[chosenAnswers]);
+
 
 //haetaan kysely
 const getInquiry = () => {
@@ -79,32 +85,42 @@ const postAnswers = (url) => {
 
 
 return(
-    <div>
+    <Swiper 
+      spaceBetween={50}
+      style={{ width:"80%"}}
+      onSlideChange={() => console.log('slide change')}
+      onSwiper={(swiper) => console.log(swiper)}
+    >
         {questions.map((q, index) =>
-        <ul key={index}>
+      
             
-            <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }}  elevation={3} key={index}>
-               <FormControl key={index} component="fieldset">
-                
-                    {q.openQuestion && <Question question={q}  setChosenAnswers={setChosenAnswers} chosenAnswers={chosenAnswers}/>}
-                    {q.multipleAnswers && 
-                    <FormGroup>
-                    <Question question={q}  setChosenAnswers={setChosenAnswers} chosenAnswers={chosenAnswers}/>
-                    </FormGroup>
-                    }
-                    {q.normQuestion && 
-                    <RadioGroup>
-                    <Question question={q}  setChosenAnswers={setChosenAnswers} chosenAnswers={chosenAnswers}/>
-                    </RadioGroup>
-                    }
-                </FormControl> 
-            </Paper>
+      <SwiperSlide>
             
-            </ul>
+        <Paper style={{ width: '80%', margin: 'auto', marginTop: 20, padding:'20' }} elevation={3} key={index}>
+            <FormControl key={index} component="fieldset">
+            
+                {q.openQuestion && <Question question={q}  setChosenAnswers={setChosenAnswers} chosenAnswers={chosenAnswers}/>}
+                {q.multipleAnswers && 
+                <FormGroup>
+                <Question question={q}  setChosenAnswers={setChosenAnswers} chosenAnswers={chosenAnswers}/>
+                </FormGroup>
+                }
+                {q.normQuestion && 
+                <RadioGroup>
+                <Question question={q}  setChosenAnswers={setChosenAnswers} chosenAnswers={chosenAnswers}/>
+                </RadioGroup>
+                }
+            </FormControl> 
+        </Paper>
+      
+      </SwiperSlide>
+            
+           
         )}
-
-        <Button startIcon={<AddCircleRoundedIcon/>} variant="contained" onClick={postMaker}>lähetä</Button>
-    </div>
+        <SwiperSlide>
+            <Button style={{marginTop:"100px"}} startIcon={<AddCircleRoundedIcon/>} variant="contained" onClick={postMaker}>lähetä</Button>
+        </SwiperSlide>
+        </Swiper>
 )
 }
 

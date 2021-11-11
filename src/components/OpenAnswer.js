@@ -15,7 +15,7 @@ export default function OpenAnswer(props) {
     return(
         
         <TextField 
-        style={{ width: 400, marginBottom: 20 }} 
+        style={{ width: "90%", marginBottom: 20 }} 
         label="Vastaa tähän" 
         onChange={(e) => changeAnswer(e)}
         />)

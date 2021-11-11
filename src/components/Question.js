@@ -48,7 +48,7 @@ export default function Question(props) {
 
     return(
         
-        <div><h4>{props.question.quest}</h4>
+        <div style={{textAlign:'left'}}><h4>{props.question.quest}</h4>
         {answers.map((a, index) => 
         <ul key={index}>
             
