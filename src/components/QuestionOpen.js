@@ -27,7 +27,7 @@ export default function QuestionOpen(props) {
         <>
         <TextField 
             disabled={disabled} 
-            style={{ width: 500, marginBottom: 20 }} 
+            style={{  marginBottom: 20 }} 
             label="Vastauksesi..." 
             onChange={(e) => setAnswer({...answer, 'openAnswer': e.target.value})} 
             />
