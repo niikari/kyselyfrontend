@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import { FormGroup } from "@mui/material";
 
 export default function Login(props) {
@@ -58,47 +52,8 @@ export default function Login(props) {
     }
 
     return (
-        <>
-        <Button
-            id="basic-button"
-            aria-controls="basic-menu"
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-            variant="outlined"
-        >
-        Login
-        </Button>
-        <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-            'aria-labelledby': 'basic-button',
-            }}
-        >
-            
-            <FormGroup>
-                <TextField
-                    style={{ margin: 10}}
-                    label="Käyttäjätunnus"
-                    name="username"
-                    type="text"
-                    onChange={handleChange}
-                 />
-                 <TextField
-                    style={{ margin: 10}}
-                    label="Salasana"
-                    name="password"
-                    type="password"
-                    onChange={handleChange}
-                 />
-                 <Button onClick={handleLogin} style={{ margin: 10}} variant="outlined">Login</Button>
-            </FormGroup>
-            
-            
-        </Menu>
-        </>
+        <div>
+        <h1>Testi</h1>
+        </div>
     )
 }
