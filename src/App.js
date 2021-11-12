@@ -10,9 +10,9 @@ import Inquiry from "./components/Inquiry";
 
 function App() {
 
-  const url = 'https://kyselybackend123.herokuapp.com'
+  //const url = 'https://kyselybackend123.herokuapp.com'
 
-  //const url = 'http://localhost:8080'
+  const url = 'http://localhost:8080'
 
   const [auth, setAuth] = useState(false)
     
