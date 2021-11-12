@@ -7,6 +7,9 @@ export default function Inquiry(props) {
 
     const { id } = useParams()
 
+    state = {
+        slideIndex: 0
+      };
     const [questions, setQuestions] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -35,7 +38,7 @@ export default function Inquiry(props) {
 
     return (
         <>
-        <p>testi</p>
+        
         </>
     )
 }
