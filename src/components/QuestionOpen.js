@@ -29,6 +29,10 @@ export default function QuestionOpen(props) {
             disabled={disabled} 
             style={{  marginBottom: 20 }} 
             label="Vastauksesi..." 
+            onClick={e => {
+                e.stopPropagation();
+                e.currentTarget.focus();
+            }}
             onChange={(e) => setAnswer({...answer, 'openAnswer': e.target.value})} 
             />
         <Button 
