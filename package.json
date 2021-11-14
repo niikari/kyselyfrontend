@@ -12,10 +12,18 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "react": "^17.0.2",
+    "react-animated-slider": "^1.1.4",
     "react-dom": "^17.0.2",
+    "react-responsive-carousel": "^3.2.22",
+    "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "react-tinder-card": "^1.4.5",
+    "swiper": "^6.8.4",
     "web-vitals": "^1.1.2"
   },
+  "tags": [
+    "swiper"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
