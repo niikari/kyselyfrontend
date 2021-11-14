@@ -14,13 +14,17 @@ import { Swiper, SwiperSlide} from "swiper/react";
 import 'swiper/swiper.min.css'
 import 'swiper/components/thumbs/thumbs.min.css'
 import SwiperCore, { Navigation } from 'swiper'
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import { Carousel } from 'react-responsive-carousel';
 SwiperCore.use([Navigation])
 
 export default function Inquiry(props) {
 
 
-
+    const [open, setOpen] = React.useState(false)
+    const [msg, setMsg] = React.useState('')
 
 
 //muuttujat kysymykset ja valitut vastaukset. valitut vastaukset
@@ -30,31 +34,41 @@ const [chosenAnswers, setChosenAnswers] = React.useState([]);
 const [thumbsSwiper, setThumbsSwiper] = React.useState(null);
 
 
+
+const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={()=>setOpen(false)}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+)
+
+
+
+
 React.useEffect(() => getInquiry(),[]);
 
 //haetaan kysely
 const getInquiry = () => {
 
     var id = props.url.slice(-1);
-
-    //jos kyselyssä ei validi id ni laittaa delault kyselyn
-    if(isNaN(id)){
-        iService.getById(1)
-        .then(data => {
-        console.log(data);
-        getQuestions(data._links.questions.href);})
-        .catch(error => console.error(error));
-                
-    }
-    //jos id validi--> palauttaa halutun kyselyn
-    else{
         iService.getById(id)
         .then(data => {
         console.log(data);
-        getQuestions(data._links.questions.href);})
-        .catch(error => console.error(error))
-        }
-}
+        getQuestions(data._links.questions.href)})
+        .catch(error => {
+            setMsg("No such inquery avaible: "+error)
+            setOpen(true) 
+        
+        })
+                
+     }
+ 
 
 //haetaan kysymykset kyselyn urlilla
 const getQuestions = (url) => {
@@ -65,7 +79,7 @@ const getQuestions = (url) => {
         console.log(data._embedded.questions);
         setQuestions(data._embedded.questions);
         })
-    .catch(error => console.error(error));
+    .catch(error => console.log(error));
 }
 
 //nappia painamalla luodaan maker
@@ -160,7 +174,13 @@ return(
 
         </Swiper>
 
-        
+        <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={()=>setOpen(false)}
+        message={msg}
+        action={action}
+      />
 
         
         </main>
