@@ -91,6 +91,7 @@ export default function PrimarySearchAppBar() {
             <Routes>
                   <Route path="/inquiry/*" element={<Inquiry url={window.location.href}/>}></Route>
                   <Route path="/results" element={<Admin />}></Route>
+                  
             </Routes>
             </BrowserRouter>
 
