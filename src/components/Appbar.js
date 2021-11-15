@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { BrowserRouter, Routes, Route, Link} from "react-router-dom";
 import Inquiry from './Inquiry';
 import Admin from './Admin';
-
+import Inquiries from './Inqueries';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -71,8 +71,10 @@ export default function PrimarySearchAppBar() {
       <Toolbar>
                   <Typography>
                     <div className="topnav">
-                      <Link to="/inquiry"> inquiry</Link>
+                    <Link to="/inquiries">Inqueries</Link>
+                      <Link to="/inquiry"> Inquiry</Link>
                       <Link to="/loginpage">Login</Link>
+
                     </div>
 
                   </Typography>
@@ -83,7 +85,8 @@ export default function PrimarySearchAppBar() {
                       <StyledInputBase placeholder="Hae kyselyä..."
                       inputProps={{ 'aria-label': 'search' }}/>
                   </Search> 
-
+                  
+                 
       </Toolbar>
     </AppBar>
   </Box>
@@ -91,6 +94,7 @@ export default function PrimarySearchAppBar() {
             <Routes>
                   <Route path="/inquiry/*" element={<Inquiry url={window.location.href}/>}></Route>
                   <Route path="/loginpage" element={<Admin />}></Route>
+                  <Route path="/inquiries"  element={<Inquiries/>}></Route> 
                   
             </Routes>
             </BrowserRouter>

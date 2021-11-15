@@ -37,3 +37,7 @@ code {
   background-color: #04AA6D;
   color: white;
 }
+
+.topnavtag {
+  align-self: center;
+}
