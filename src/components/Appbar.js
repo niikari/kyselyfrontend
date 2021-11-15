@@ -72,7 +72,7 @@ export default function PrimarySearchAppBar() {
                   <Typography>
                     <div className="topnav">
                       <Link to="/inquiry"> inquiry</Link>
-                      <Link to="/admin">results</Link>
+                      <Link to="/loginpage">Login</Link>
                     </div>
 
                   </Typography>
@@ -90,7 +90,7 @@ export default function PrimarySearchAppBar() {
 
             <Routes>
                   <Route path="/inquiry/*" element={<Inquiry url={window.location.href}/>}></Route>
-                  <Route path="/results" element={<Admin />}></Route>
+                  <Route path="/loginpage" element={<Admin />}></Route>
                   
             </Routes>
             </BrowserRouter>

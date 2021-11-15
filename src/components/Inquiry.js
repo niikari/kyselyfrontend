@@ -18,6 +18,7 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Carousel } from 'react-responsive-carousel';
+import { Grid } from '@mui/material';
 SwiperCore.use([Navigation])
 
 export default function Inquiry(props) {
@@ -57,6 +58,7 @@ React.useEffect(() => getInquiry(),[]);
 const getInquiry = () => {
 
     var id = props.url.slice(-1);
+    if(isNaN(id)){id=1}
         iService.getById(id)
         .then(data => {
         console.log(data);
@@ -180,6 +182,9 @@ return(
         onClose={()=>setOpen(false)}
         message={msg}
         action={action}
+        alignItems="center"
+        justifyContent="center"
+        severity="info"
       />
 
         
