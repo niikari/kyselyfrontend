@@ -91,6 +91,21 @@ export default function Admin(props) {
     const [loggedin, setLoggedin] = React.useState(false);
 
     
+//Snackbar maarittelyä
+    const action = (
+        <React.Fragment>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="primary"
+            onClick={()=>setOpen(false)}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </React.Fragment>
+    )
+
+
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
   
@@ -128,18 +143,7 @@ export default function Admin(props) {
       },
     ];
 
-const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={()=>setOpen(false)}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-)
+
 
 //ALKAA CHART MÄÄRITTELY
 const data = {
@@ -185,20 +189,20 @@ const data = {
 const getToken = () => {
 
     axios.post(url+"/login", {
-        username:user.username ,password:user.password
-    }).then((response) => {
-        console.log(response);
-        console.log(response.headers.authorization)
-        //pitäs laittaa viel johonki globaalliin muistiin tokeni
-        setUserJwt(response.headers.authorization)
-        setClicked(false);
-        setLoggedin(true);
-        setMsg("Logged in succesfully!")
-        setOpen(true)
+        username:user.username, password:user.password})
+        .then((response) => {
+            //pitäs laittaa viel johonki globaalliin muistiin tokeni
+            //nyt menee vaa statee ja poistuu refreshissä ja muilla sivuilla
+            //täytyy pistää selaime muistiin niin voi käyttää boolean muutujia hyväks renderöinnis
+            setUserJwt(response.headers.authorization)
+            setClicked(false);
+            setLoggedin(true);
+            setMsg("Logged in succesfully!")
+            setOpen(true)
 
       }, (error) => {
             console.log(error)
-            setMsg(error)
+            setMsg(error+"error")
             setOpen(true)
       });
  
@@ -221,7 +225,7 @@ return(
 <main> 
    {loggedin===true && <div>  USER TOKEN: </div>}
    {loggedin===false && <div className="loginImage">
-            <img src={loginImg} width="300" style={{position: 'relative'}} alt="login"/>
+    <img src={loginImg} width="300" style={{position: 'relative'}} alt="login"/>
     </div>}
    
    <Grid
@@ -299,14 +303,25 @@ return(
     
 {/* myöhemmin täst selaimelta info että onko tokenia yms */}
  {loggedin===true && <Button onClick={()=>setClicked(true)}> Show charts </Button>}
-
+ {loggedin===true && <Button onClick={()=>setClicked(true)}> Add new inqueries</Button>}
+ {loggedin===true && <Button onClick={()=>setClicked(true)}> Show something </Button>}
+ {loggedin===true && <Button onClick={()=>setClicked(true)}> Add Questions </Button>}
  {/* myöhemmin täst selaimelta info että onko tokenia yms */}
  {clicked===true && <Bar data={data} options={options} />}
 
 
 </Grid> 
 
-
+<Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={()=>setOpen(false)}
+        message={msg}
+        action={action}
+        alignItems="center"
+        justifyContent="center"
+        color="secondary"
+      />
       </main> 
 )
 }
