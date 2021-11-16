@@ -23,7 +23,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { Bar } from 'react-chartjs-2';
 import Collapse from '@material-ui/core/Collapse';
 
-
+import jwt from 'jwt-decode'
 import PropTypes from 'prop-types';
 import AddIcon from '@mui/icons-material/Add';
 import UpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -35,6 +35,7 @@ import TextField from '@mui/material/TextField';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import loginImg from './login.jpg'
+import Results from './Results';
 
             function TabPanel(props) {
                 const { children, value, index, ...other } = props;
@@ -135,13 +136,7 @@ export default function Admin(props) {
         icon: <LoginIcon onClick={()=>getToken()}/>,
         label: 'Edit',
       },
-      {
-        color: 'inherit',
-        sx: { ...fabStyle, ...fabGreenStyle },
-        icon: <LoginIcon />,
-        label: 'Expand',
-      },
-    ];
+    ]
 
 
 
@@ -185,7 +180,7 @@ const data = {
 
 
 
-//haetaan tokeni servulta
+//HAETAAN TOKENI SERVULTA
 const getToken = () => {
 
     axios.post(url+"/login", {
@@ -194,24 +189,30 @@ const getToken = () => {
             //pitäs laittaa viel johonki globaalliin muistiin tokeni
             //nyt menee vaa statee ja poistuu refreshissä ja muilla sivuilla
             //täytyy pistää selaime muistiin niin voi käyttää boolean muutujia hyväks renderöinnis
-            setUserJwt(response.headers.authorization)
-            setClicked(false);
-            setLoggedin(true);
-            setMsg("Logged in succesfully!")
-            setOpen(true)
+            const jwtToken = response.headers.authorization
 
-      }, (error) => {
-            console.log(error)
-            setMsg(error+"error")
-            setOpen(true)
-      });
+            
+
+            if (jwtToken !== null) {
+                sessionStorage.setItem("jwt", jwtToken)
+                sessionStorage.setItem("role", jwt(jwtToken).sub)
+            
+                    setClicked(false);
+                    setLoggedin(true);
+                    setMsg("Logged in succesfully!"+sessionStorage.getItem("jwt"))
+                    setOpen(true)
+                    
+                    
+            }
+            }, (error) => {
+                console.log(error)
+                setMsg(error+"error")
+                setOpen(true)
+            });
  
     
     }
     
-   const fetchStats=()=>{
-       alert("moi")
-   }
 
    const handleChange1 = (event)=>{
     setUser({...user, [event.target.name]: event.target.value});
@@ -222,10 +223,9 @@ const getToken = () => {
 
 return(
     
-<main> 
-   {loggedin===true && <div>  USER TOKEN: </div>}
-   {loggedin===false && <div className="loginImage">
-    <img src={loginImg} width="300" style={{position: 'relative'}} alt="login"/>
+    <main> 
+        {loggedin===false && <div className="loginImage">
+        {sessionStorage.getItem("jwt") === null && <img src={loginImg} width="300" style={{position: 'relative'}} alt="login"/>}
     </div>}
    
    <Grid
@@ -237,7 +237,7 @@ return(
   style={{ minHeight: '100vh' }}
 >
 
-{loggedin===false && <Box 
+{sessionStorage.getItem("jwt") === null && <Box 
         sx={{
             
             bgcolor: 'background.paper',
@@ -256,29 +256,26 @@ return(
             aria-label="action tabs example"
             >
                 <Tab label="Admin Login" {...a11yProps(0)} />
-                <Tab label="Creator login" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
+                <Tab label="User login" {...a11yProps(1)} />
             </Tabs>
         </AppBar>
                 <SwipeableViews
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={value}
                     onChangeIndex={handleChangeIndex}
-                >
-                    <TabPanel value={value} index={0} dir={theme.direction}>
-                    <div> Admin Login </div>
-                                <TextField id="outlined-basic" name ="username" label="username" variant="outlined" onChange={handleChange1}/>
-                                <TextField id="filled-basic" name ="password" label="password" variant="filled" onChange={handleChange1} />
-                    </TabPanel>
-                    <TabPanel value={value} index={1} dir={theme.direction}>
-                    <div> Survey creator login </div>
-                                <TextField id="outlined-basic" name ="username" label="username" variant="outlined" onChange={handleChange1}/>
-                                <TextField id="filled-basic" name ="password" label="password" variant="filled" onChange={handleChange1} />
-                    </TabPanel>
-                    <TabPanel value={value} index={2} dir={theme.direction}>
-                    <div> mitävaan</div>
-                    
-                    </TabPanel>
+                    >
+                        <TabPanel value={value} index={0} dir={theme.direction}>
+                        <div> Admin Login </div>
+                                    <TextField id="outlined-basic" name ="username" label="username" variant="outlined" onChange={handleChange1}/>
+                                    <TextField id="filled-basic" name ="password" type="password" label="password" variant="filled" onChange={handleChange1} />
+                        </TabPanel>
+
+                        <TabPanel value={value} index={1} dir={theme.direction}>
+                        <div> User login </div>
+                                    <TextField id="outlined-basic" name ="username" label="username" variant="outlined" onChange={handleChange1}/>
+                                    <TextField id="filled-basic" name ="password" type="password" label="password" variant="filled" onChange={handleChange1} />
+                        </TabPanel>
+    
                 </SwipeableViews>
             {fabs.map((fab, index) => (
                         <Zoom
@@ -299,16 +296,8 @@ return(
 
     
  
-{userJwt}
-    
-{/* myöhemmin täst selaimelta info että onko tokenia yms */}
- {loggedin===true && <Button onClick={()=>setClicked(true)}> Show charts </Button>}
- {loggedin===true && <Button onClick={()=>setClicked(true)}> Add new inqueries</Button>}
- {loggedin===true && <Button onClick={()=>setClicked(true)}> Show something </Button>}
- {loggedin===true && <Button onClick={()=>setClicked(true)}> Add Questions </Button>}
- {/* myöhemmin täst selaimelta info että onko tokenia yms */}
- {clicked===true && <Bar data={data} options={options} />}
-
+                    {/* Tässä resultit, jos role admin niin pääsee sisään */}
+                     {sessionStorage.getItem("role")==="admin" && <Results /> }
 
 </Grid> 
 
