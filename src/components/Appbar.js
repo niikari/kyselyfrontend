@@ -10,6 +10,9 @@ import { BrowserRouter, Routes, Route, Link} from "react-router-dom";
 import Inquiry from './Inquiry';
 import Admin from './Admin';
 import Inquiries from './Inqueries';
+import { Button } from '@mui/material';
+import { useNavigate } from "react-router";
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,14 +55,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
- 
+
 
 
 export default function PrimarySearchAppBar() {
-
-    
-    
-
+  
+  
+  
+    //kun painetaan nappia niin ikkuna reloadaa sen sivun missä käyttäjä on
+  function Logout(){
+    sessionStorage.clear("jwt")
+    window.location.reload();
+  
+  }
 
   return (
 
@@ -74,7 +82,7 @@ export default function PrimarySearchAppBar() {
                     <Link to="/inquiries">Inqueries</Link>
                       <Link to="/inquiry"> Inquiry</Link>
                       <Link to="/loginpage">Login</Link>
-
+                      {sessionStorage.getItem("jwt") !== null && <button onClick={Logout}>Logout </button>}
                     </div>
 
                   </Typography>
@@ -97,6 +105,9 @@ export default function PrimarySearchAppBar() {
                   <Route path="/inquiries"  element={<Inquiries/>}></Route> 
                   
             </Routes>
+
+             
+
             </BrowserRouter>
 
   );
