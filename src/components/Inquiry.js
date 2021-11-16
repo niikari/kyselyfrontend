@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+
 import Paper from '@mui/material/Paper';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
@@ -20,10 +22,14 @@ export default function Inquiry(props) {
 
     const url = props.url
 
+    const { id } = useParams()
+
     const [questions, setQuestions] = useState([])
 
     // TEKIJÄ, VIELÄ EI KÄYTETÄ MUTTA SITTEN KUN RAPORTTIA LÄHDETÄÄN TEKEMÄÄN TARVITAAN
     const [maker, setMaker] = useState({})
+
+    
 
     // LADATAANKO KYSELYÄ VIELÄ
     const [loading, setLoading] = useState(true)
@@ -65,18 +71,17 @@ export default function Inquiry(props) {
 
     // SNACKBAR LOPPUU
 
-    // HAETAAN ENSIN KYSELY
-    // MÄÄRITELLÄÄN SELECTINQUIRY.JS -TIEDOSTOSSA (PROPS) MIKÄ PATTERISTO OTETAAN NÄYTILLE
-    useEffect(() => {
-        console.log(props.inquiry._links.inquiry.href)
-        fetch(props.inquiry._links.inquiry.href)
+    useEffect(() => fetchInquiry() ,[])
+
+    const fetchInquiry = () => {
+        fetch(`${props.url}/api/inquiries/${id}`)
         .then(res => res.json())
         .then(data => fetchQuestions(data._links.questions.href))
-    }, [])
+        .catch(err => console.error(err))
+    }
 
-    // HAETAAN SITTEN TIETYN KYSELYN KYSYMYKSET
-    const fetchQuestions = (url) => {
-        fetch(url)
+    const fetchQuestions = (questionsUrl) => {
+        fetch(questionsUrl)
         .then(res => res.json())
         .then(data => {
             setQuestions(data._embedded.questions)
@@ -84,6 +89,9 @@ export default function Inquiry(props) {
         })
         .catch(err => console.error(err))
     }
+
+    // HAETAAN ENSIN KYSELY
+    
 
     // LUODAAN "MAKER-OLIO" 
     const postMakerAndAnswers = () => {

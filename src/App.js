@@ -5,7 +5,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SelectInquiry from "./components/SelectInquiry";
 import Results from "./components/Results";
-import Chart from "react-google-charts";
 
 function App() {
 
