@@ -14,6 +14,7 @@ import CreateInquiry from "./components/CreateInquiry";
 import colours from "./images/texture-g9dfd8c623_1920.jpg"
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
+import Reports from './components/Reports';
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
           <Route path="/login" exact element={<Login url={url} login={login} />} />
           <Route path="/inquiries/:id" exact element={<Inquiry url={url} />} />
           <Route path="/create" exact element={<CreateInquiry url={url} auth={auth} />} />
+          <Route path="/reports/:id" exact element={<Reports url={url} />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 export default function Report(props) {
 
     // PROPSISSA TULEE MUKANA MAKER-OLIO JA APIN URL
 
     const [makerAnswers, setMakerAnswers] = useState([])
-    const [notMakerAnswers, setNotMakerAnswers] = useState([])
 
-    useEffect(() => {
-        fetchMakerAnswers()
-        fetchNotMakerAnswers()
-    }, [])
+    const { id } = useParams()
+
+    useEffect(() => fetchMakerAnswers(), [])
 
     const fetchMakerAnswers = () => {
-        console.log(`${props.url}/api/makerAnswers/search/findByMaker?maker=${props.maker._links.self.href}`)
-        fetch(`${props.url}/api/makerAnswers/search/findByMaker?maker=${props.maker._links.self.href}`)
+        fetch(`${props.url}/reports/${id}`)
         .then(res => res.json())
-        .then(data => setMakerAnswers(data._embedded.makerAnswers))
-        .catch(err => console.error(err))
-    }
-
-    const fetchNotMakerAnswers = () => {
-        fetch(`${props.url}/api/makerAnswers/search/findByMakerIsNot?maker=${props.maker._links.self.href}`)
-        .then(res => res.json())
-        .then(data => setNotMakerAnswers(data._embedded.makerAnswers))
+        .then(data => console.log(data))
         .catch(err => console.error(err))
     }
 
     return (
         <>
-
+        <p>raportti osio</p>
         </>
     )
 }
