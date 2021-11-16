@@ -74,7 +74,7 @@ const getInquiry = () => {
 
 //haetaan kysymykset kyselyn urlilla
 const getQuestions = (url) => {
-    console.log(url)
+    console.log(url) 
     qService
     .getByUrl(url)
     .then(data => {

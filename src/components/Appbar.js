@@ -72,7 +72,7 @@ export default function PrimarySearchAppBar() {
   return (
 
 
-<BrowserRouter>
+<BrowserRouter> 
 
   <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static">

@@ -75,7 +75,7 @@ const data = {
       {
         label: '# of Blue Votes',
         data: [2, 3, 20, 5, 1, 4],
-        backgroundColor: 'rgb(54, 162, 235)',
+        backgroundColor: 'rgb(54, 162, 235)', 
       },
       {
         label: '# of Green Votes',

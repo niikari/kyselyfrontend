@@ -24,7 +24,7 @@ export default function Inqueries() {
        setFetched(true);
         }),[]) 
 
-        const handleChange = (event) => {
+        const handleChange = (event) => { 
          setSearch(event.target.value);
        };
 
