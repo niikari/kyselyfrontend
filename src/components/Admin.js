@@ -184,7 +184,6 @@ const data = {
 // TÄSSÄ LOPPUU TYYLIMÄÄRITTELYT
 
 
-
 //haetaan tokeni servulta
 const getToken = () => {
 
@@ -194,7 +193,8 @@ const getToken = () => {
             //pitäs laittaa viel johonki globaalliin muistiin tokeni
             //nyt menee vaa statee ja poistuu refreshissä ja muilla sivuilla
             //täytyy pistää selaime muistiin niin voi käyttää boolean muutujia hyväks renderöinnis
-            setUserJwt(response.headers.authorization)
+            //setUserJwt(response.headers.authorization)
+            sessionStorage.setItem('jwt', response.headers.authorization)
             setClicked(false);
             setLoggedin(true);
             setMsg("Logged in succesfully!")
@@ -268,12 +268,12 @@ return(
                     <TabPanel value={value} index={0} dir={theme.direction}>
                     <div> Admin Login </div>
                                 <TextField id="outlined-basic" name ="username" label="username" variant="outlined" onChange={handleChange1}/>
-                                <TextField id="filled-basic" name ="password" label="password" variant="filled" onChange={handleChange1} />
+                                <TextField id="filled-basic" type="password" name ="password" label="password" variant="filled" onChange={handleChange1} />
                     </TabPanel>
                     <TabPanel value={value} index={1} dir={theme.direction}>
                     <div> Survey creator login </div>
                                 <TextField id="outlined-basic" name ="username" label="username" variant="outlined" onChange={handleChange1}/>
-                                <TextField id="filled-basic" name ="password" label="password" variant="filled" onChange={handleChange1} />
+                                <TextField id="filled-basic" type="password" name ="password" label="password" variant="filled" onChange={handleChange1} />
                     </TabPanel>
                     <TabPanel value={value} index={2} dir={theme.direction}>
                     <div> mitävaan</div>
@@ -316,7 +316,7 @@ return(
         open={open}
         autoHideDuration={3000}
         onClose={()=>setOpen(false)}
-        message={msg}
+        message={sessionStorage.getItem("jwt")}
         action={action}
         alignItems="center"
         justifyContent="center"
