@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Results from "./Results";
+
 var style = {
     backgroundColor: "#F8F8F8",
     borderTop: "1px solid #E7E7E7",
@@ -25,6 +27,7 @@ function Footer({ children }) {
             <div style={style}>
                 <p>@damn bossteam</p>
             </div>
+            < Results />
         </div>
     )
 }
