@@ -179,8 +179,12 @@ const data = {
 // TÄSSÄ LOPPUU TYYLIMÄÄRITTELYT
 
 
+<<<<<<< HEAD
 
 //HAETAAN TOKENI SERVULTA
+=======
+//haetaan tokeni servulta
+>>>>>>> 7c0ccb07cf1260267f13d1202a1a7a6df794231f
 const getToken = () => {
 
     axios.post(url+"/login", {
@@ -189,9 +193,18 @@ const getToken = () => {
             //pitäs laittaa viel johonki globaalliin muistiin tokeni
             //nyt menee vaa statee ja poistuu refreshissä ja muilla sivuilla
             //täytyy pistää selaime muistiin niin voi käyttää boolean muutujia hyväks renderöinnis
+<<<<<<< HEAD
             const jwtToken = response.headers.authorization
 
             
+=======
+            //setUserJwt(response.headers.authorization)
+            sessionStorage.setItem('jwt', response.headers.authorization)
+            setClicked(false);
+            setLoggedin(true);
+            setMsg("Logged in succesfully!")
+            setOpen(true)
+>>>>>>> 7c0ccb07cf1260267f13d1202a1a7a6df794231f
 
             if (jwtToken !== null) {
                 sessionStorage.setItem("jwt", jwtToken)
@@ -305,7 +318,7 @@ return(
         open={open}
         autoHideDuration={3000}
         onClose={()=>setOpen(false)}
-        message={msg}
+        message={sessionStorage.getItem("jwt")}
         action={action}
         alignItems="center"
         justifyContent="center"
