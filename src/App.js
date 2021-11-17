@@ -17,9 +17,9 @@ import CloseIcon from '@mui/icons-material/Close';
 
 function App() {
 
-  // const url = 'https://kyselybackend123.herokuapp.com'
+  const url = 'https://kyselybackend123.herokuapp.com'
 
-  const url = 'http://localhost:8080'
+  // const url = 'http://localhost:8080'
 
   // KIRJAUTUMINEN ALKAA
   const [auth, setAuth] = useState(false)
