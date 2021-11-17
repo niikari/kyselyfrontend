@@ -61,13 +61,13 @@ export default function CreateInquiry() {
                 bgcolor: 'background.default',
                 }}
             >
-                <Typography><h3>{steps[activeStep].label}</h3></Typography>
+                <Typography>{steps[activeStep].label}</Typography>
             </Paper>
             <Box sx={{ height: 255, maxWidth: 400, width: '100%', p: 2 }}>
                 {steps[activeStep].description}
                 {activeStep === 0 && 
                     <TextField 
-                        style={{ margin: 10 }}
+                        style={{ marginTop: 80 }}
                         label="Anna nimi..."
                         name="name"
                         onChange={(e) => setInquiry({...inquiry, [e.target.name]: e.target.value})}

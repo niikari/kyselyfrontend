@@ -73,7 +73,6 @@ export default function Inquiry(props) {
     // HAETAAN ENSIN KYSELY
     // MÄÄRITELLÄÄN SELECTINQUIRY.JS -TIEDOSTOSSA (PROPS) MIKÄ PATTERISTO OTETAAN NÄYTILLE
     useEffect(() => {
-        console.log(`${props.url}/inquiries/${id}`)
         fetch(`${props.url}/api/inquiries/${id}`)
         .then(res => res.json())
         .then(data => fetchQuestions(data._links.questions.href))
@@ -156,19 +155,20 @@ export default function Inquiry(props) {
 
     return (
         <div style={{ marginTop: 20, textAlign: 'center' }}>
-        {
-            questions.map((question, index) =>
-            // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
-            <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
-               <FormControl key={index} component="fieldset">
-                <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
-                    {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} />}
-                    {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} />}
-                    {question.normQuestion && <Question question={question} add={addNewAnswers} />}
-                </FormControl> 
-                
-            </Paper>)
-        }
+            
+            {
+                questions.map((question, index) =>
+                // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
+                <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
+                <FormControl key={index} component="fieldset">
+                    <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
+                        {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} />}
+                        {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} />}
+                        {question.normQuestion && <Question question={question} add={addNewAnswers} />}
+                    </FormControl> 
+                    
+                </Paper>)
+            }
         <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="outlined">Lähetä vastaukset</Button>
         <Snackbar
         open={open}

@@ -3,11 +3,44 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Loading from "./Loading";
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Inquiries(props) {
 
     const [inquiries, setInquiries] = useState([])
     const [loading, setLoading] = useState(true)
+
+    // SNACKBAR
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+    
+    const action = (
+        <React.Fragment>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </React.Fragment>
+      );
+
+    // SNACKBAR LOPPUU
 
     useEffect(() => fetchInquiries(), [])
 
@@ -55,6 +88,13 @@ export default function Inquiries(props) {
                     
                 </Box>)
         }
+        <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Kirjautuminen onnistui, tervetuloa!"
+        action={action}
+      />
         </>
     )
 }

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import loginphoto from '../images/login.jpg'
 
 export default function Login(props) {
 
@@ -18,7 +19,8 @@ export default function Login(props) {
     const navigate = useNavigate()
 
     // SNACKBAR
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [msg, setMsg] = useState('')
 
     const handleClick = () => {
       setOpen(true);
@@ -61,8 +63,15 @@ export default function Login(props) {
             if (jwtToken !== null) {
                 sessionStorage.setItem("jwt", jwtToken)
                 props.login()
-                navigate('/')
+                setMsg(`Tervetuloa takaisin ${user.username}`)
+                handleClick()
+                setTimeout(() => {
+                  navigate('/')
+                }, 1500)
+                
             } else {
+                // AVATAAN SNACKBAR
+                setMsg("Tarkista antamasi käyttäjätunnus tai salasana")
                 handleClick()
             }
         })
@@ -87,10 +96,11 @@ export default function Login(props) {
             }}
             >
             <Paper elevation={3} style={{margin: 'auto', marginTop: 10}}  >
-                <Stack>
-                    <TextField style={{ margin: '7%' }} label="Käyttäjätunnus" name="username" onChange={handleChange} />
+                <Stack>                    
+                    <TextField style={{ margin: '7%' }} label="Käyttäjätunnus" name="username" onChange={handleChange} />                    
                     <TextField type="password" style={{ margin: '7%' }} label="Salasana" name="password" onChange={handleChange} />
-                    <Button onClick={fetchToken} startIcon={<VpnKeyOutlinedIcon />}>Kirjaudu</Button>
+                    <Button onClick={fetchToken} size="large" startIcon={<VpnKeyOutlinedIcon />}></Button>
+                    <img src={loginphoto} />                    
                 </Stack>
             </Paper>
         </Box> 
@@ -98,7 +108,7 @@ export default function Login(props) {
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        message="Tarkista antamasi käyttäjätunnus tai salasana..."
+        message={msg}
         action={action}
       />        
         </>
