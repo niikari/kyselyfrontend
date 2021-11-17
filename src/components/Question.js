@@ -25,6 +25,7 @@ export default function Question(props) {
     const handleClick = () => {
         if (Object.keys(answer).length !== 0) {
             props.add(answer)
+            //props.removeAnswered(props.question)
             setDisabled(true)
         }        
     }

@@ -3,15 +3,17 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Inquiries from "./components/Inquiries";
 import Inquiry from "./components/Inquiry";
-import MenuNormal from "./components/MenuNormal";
 import CreateInquiry from "./components/CreateInquiry";
 import colours from "./images/texture-g9dfd8c623_1920.jpg"
-
 import Reports from './components/Reports';
+import MenuMobile from "./components/MenuMobile";
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 function App() {
 
@@ -21,7 +23,6 @@ function App() {
 
   // KIRJAUTUMINEN ALKAA
   const [auth, setAuth] = useState(false)
-
 
   // JOS KÄYTTÄJÄ ON KIRJAUTUNUT NIIN SESSIOON ON TALLENTUNUT JWT-TOKEN ARVO
   useEffect(() => {
@@ -33,30 +34,67 @@ function App() {
   // KIRJAUTUMISSIVUN KAUTTA ASETETAAN ARVO
   const login = () => {
     setAuth(true)
+    setMsg("Kirjautuminen onnistui, tervetuloa!")
+    handleClick()
   }
 
   const handleLogout = () => {
     setAuth(false)
+    setMsg("Kirjauduttu onnistuneesti ulos.")
+    handleClick()
     sessionStorage.removeItem('jwt')
   }
   // KIRJAUTUMINEN PÄÄTTYY
-    
+
+  // SNACKBAR ALKAA
+  const [open, setOpen] = useState(false)
+  const [msg, setMsg] = useState('')
+
+  const handleClick = () => {
+      setOpen(true)
+  }
+  
+  const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return
+      }
+  
+      setOpen(false)
+  }
+  
+  const action = (
+      <React.Fragment>
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleClose}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+  )
+
+  // SNACKBAR LOPPUU
+  
+  // <MenuNormal auth={auth} handleLogout={handleLogout}/>
+  
   return (
     <BrowserRouter>
       <div className="App" style={{ backgroundImage: `url(${colours})`, height: 1600 }}>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar color="transparent" position="static" style={{ backgroundColor: 'white' }}>
-            <Toolbar>            
+            <Toolbar>      
+            <MenuMobile auth={auth} handleLogout={handleLogout}/>      
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Ohjelmistoprojekti kysely
-              </Typography>
-              <MenuNormal auth={auth} handleLogout={handleLogout}/>
+              </Typography>              
             </Toolbar>
           </AppBar>
         </Box>
         <Routes>
-          <Route path="/" exact element={<Inquiries url={url} auth={auth} />} />
-          <Route path="/login" exact element={<Login url={url} login={login} />} />
+          <Route path="/" exact element={<Inquiries url={url} auth={auth}  />} />
+          <Route path="/login" exact element={<Login url={url} login={login}  />} />
           <Route path="/inquiries/:id" exact element={<Inquiry url={url} />} />
           <Route path="/create" exact element={<CreateInquiry url={url} auth={auth} />} />
           {auth &&
@@ -64,7 +102,15 @@ function App() {
           }
         </Routes>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        message={msg}
+        action={action}
+        />
     </BrowserRouter>
+    
   );
 }
 

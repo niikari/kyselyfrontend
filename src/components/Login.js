@@ -63,15 +63,9 @@ export default function Login(props) {
             if (jwtToken !== null) {
                 sessionStorage.setItem("jwt", jwtToken)
                 props.login()
-                setMsg(`Tervetuloa takaisin ${user.username}`)
-                handleClick()
-                setTimeout(() => {
-                  navigate('/')
-                }, 1500)
-                
+                navigate('/')                
             } else {
                 // AVATAAN SNACKBAR
-                setMsg("Tarkista antamasi käyttäjätunnus tai salasana")
                 handleClick()
             }
         })
@@ -99,7 +93,7 @@ export default function Login(props) {
                 <Stack>                    
                     <TextField style={{ margin: '7%' }} label="Käyttäjätunnus" name="username" onChange={handleChange} />                    
                     <TextField type="password" style={{ margin: '7%' }} label="Salasana" name="password" onChange={handleChange} />
-                    <Button onClick={fetchToken} size="large" startIcon={<VpnKeyOutlinedIcon />}></Button>
+                    <Button onClick={fetchToken} size="large" startIcon={<VpnKeyOutlinedIcon />}>Kirjaudu</Button>
                     <img src={loginphoto} />                    
                 </Stack>
             </Paper>
@@ -108,7 +102,7 @@ export default function Login(props) {
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        message={msg}
+        message="Tarkista antamasi käyttäjätunnus ja salasana"
         action={action}
       />        
         </>

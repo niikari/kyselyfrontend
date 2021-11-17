@@ -15,11 +15,9 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Report from "./Reports";
 import { useParams } from "react-router";
+import Carousel from 'react-material-ui-carousel'
 
 export default function Inquiry(props) {
-
-    // BACKENDIN OSOITE, TUOTANNOSSAHAN VAIHTUU
-    // const url = 'https://kyselybackend123.herokuapp.com'
 
     const url = props.url
 
@@ -32,6 +30,8 @@ export default function Inquiry(props) {
 
     // LADATAANKO KYSELYÄ VIELÄ
     const [loading, setLoading] = useState(true)
+
+    const [total, setTotal] = useState(0)
 
     // KERÄTÄÄN VASTAUKSET (SISÄLTÄÄ MYÖS TIEDON KYSYMYKSESTÄ JA KYSELYSTÄ)
     const [answers, setAnswers] = useState([])
@@ -143,6 +143,7 @@ export default function Inquiry(props) {
     const addNewListOfAnswers = (arr) => {
         setAnswers([...answers, ...arr])
     }
+
     
     // NÄYTETÄÄN LOADING KUNNES KYSYMYKSET ON LADATTU
     while (loading) {
@@ -155,29 +156,36 @@ export default function Inquiry(props) {
 
     return (
         <div style={{ marginTop: 20, textAlign: 'center' }}>
-            
+            <Carousel
+                autoPlay={false}
+                animation="slide"
+                cycleNavigation={false}
+                navButtonsAlwaysVisible
+                >            
             {
                 questions.map((question, index) =>
                 // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
-                <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
+                <Paper style={{ width: '50%', height: 400, margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
                 <FormControl key={index} component="fieldset">
                     <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
-                        {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} />}
+                        {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers}  />}
                         {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} />}
                         {question.normQuestion && <Question question={question} add={addNewAnswers} />}
                     </FormControl> 
                     
                 </Paper>)
             }
-        <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="outlined">Lähetä vastaukset</Button>
+            </Carousel>
+        <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
         <Snackbar
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
         message={msg}
         action={action}
-      />
-      {disabled && <Report maker={maker} url={url}/>}
+        />
+        
+      
         </div>
     )
 }
