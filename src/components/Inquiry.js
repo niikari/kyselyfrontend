@@ -120,7 +120,10 @@ return(
         <SwiperSlide>
             <Button style={{marginTop:"100px"}} startIcon={<AddCircleRoundedIcon/>} variant="contained" onClick={postMaker}>lähetä</Button>
         </SwiperSlide>
+
+        
         </Swiper>
+    
 )
 }
 
