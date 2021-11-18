@@ -20,7 +20,6 @@ export default function Login(props) {
 
     // SNACKBAR
     const [open, setOpen] = useState(false);
-    const [msg, setMsg] = useState('')
 
     const handleClick = () => {
       setOpen(true);
@@ -94,7 +93,7 @@ export default function Login(props) {
                     <TextField style={{ margin: '7%' }} label="Käyttäjätunnus" name="username" onChange={handleChange} />                    
                     <TextField type="password" style={{ margin: '7%' }} label="Salasana" name="password" onChange={handleChange} />
                     <Button onClick={fetchToken} size="large" startIcon={<VpnKeyOutlinedIcon />}>Kirjaudu</Button>
-                    <img src={loginphoto} />                    
+                    <img src={loginphoto} alt="Loginphoto" />                    
                 </Stack>
             </Paper>
         </Box> 

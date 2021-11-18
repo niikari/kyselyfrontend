@@ -3,8 +3,11 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import HomeIcon from '@mui/icons-material/Home';
+import CreateIcon from '@mui/icons-material/Create';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 
 export default function MenuMobile(props) {
 
@@ -48,27 +51,27 @@ export default function MenuMobile(props) {
             'aria-labelledby': 'basic-button',
             }}
         >
-            <MenuItem onClick={() => {
+            <MenuItem  onClick={() => {
                 navigate('/')
                 handleClose()
-            }}>Etusivu</MenuItem>
+            }}><HomeIcon />Etusivu</MenuItem>
             {props.auth && 
                 <MenuItem onClick={() => {
                     navigate('/create')
                     handleClose()
-                }}>Luo kysely</MenuItem>
+                }}><CreateIcon />Luo kysely</MenuItem>
             }
             {props.auth === false && 
                 <MenuItem onClick={() => {
                     navigate('/login')
                     handleClose()
                 }}>
-                    Login
+                    <LoginIcon />Login
                 </MenuItem>
             }
             {props.auth && 
                 <MenuItem onClick={logout}>
-                    <Link style={{ textDecoration: 'none', marginRight: 10 }} to="/">Logout</Link>
+                    <LogoutIcon />Logout
                 </MenuItem>
             }
             

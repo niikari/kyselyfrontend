@@ -8,14 +8,12 @@ export default function QuestionOpen(props) {
     const [answer, setAnswer] = useState({})
     const [disabled, setDisabled] = useState(false)
 
-    useEffect(() => fetchAnswer(), [])
-
-    const fetchAnswer = () => {
+    useEffect(() => {
         fetch(props.question._links.answers.href)
         .then(res => res.json())
         .then(data => setAnswer(data._embedded.answers[0]))
         .catch(err => console.error(err))
-    }
+    }, [props.question._links.answers.href])
 
     // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN PARENTILTA TULEVAAN STATEEN ANNETTU VASTAUS JA TALLENNETAAN VASTAUS
     const handleClick = () => {

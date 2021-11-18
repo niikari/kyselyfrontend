@@ -13,7 +13,6 @@ import Loading from "./Loading";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Report from "./Reports";
 import { useParams } from "react-router";
 import Carousel from 'react-material-ui-carousel'
 
@@ -31,8 +30,6 @@ export default function Inquiry(props) {
     // LADATAANKO KYSELYÄ VIELÄ
     const [loading, setLoading] = useState(true)
 
-    const [total, setTotal] = useState(0)
-
     // KERÄTÄÄN VASTAUKSET (SISÄLTÄÄ MYÖS TIEDON KYSYMYKSESTÄ JA KYSELYSTÄ)
     const [answers, setAnswers] = useState([])
 
@@ -42,10 +39,6 @@ export default function Inquiry(props) {
     // SNACKBAR ALKAA
     const [open, setOpen] = useState(false)
     const [msg, setMsg] = useState('')
-
-    const handleClick = () => {
-        setOpen(true)
-    }
     
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -76,7 +69,8 @@ export default function Inquiry(props) {
         fetch(`${props.url}/api/inquiries/${id}`)
         .then(res => res.json())
         .then(data => fetchQuestions(data._links.questions.href))
-    }, [])
+        .catch(err => console.error(err))
+    }, [props.url, id])
 
     // HAETAAN SITTEN TIETYN KYSELYN KYSYMYKSET
     const fetchQuestions = (url) => {
@@ -166,11 +160,12 @@ export default function Inquiry(props) {
                 questions.map((question, index) =>
                 // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
                 <Paper style={{ width: '50%', height: 400, margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
+                
                 <FormControl key={index} component="fieldset">
                     <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
-                        {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers}  />}
-                        {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} />}
-                        {question.normQuestion && <Question question={question} add={addNewAnswers} />}
+                        {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} index={index} />}
+                        {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} index={index}  />}
+                        {question.normQuestion && <Question question={question} add={addNewAnswers} index={index}  />}
                     </FormControl> 
                     
                 </Paper>)

@@ -29,10 +29,10 @@ const steps = [
 export default function CreateInquiry() {
 
     const [inquiry, setInquiry] = useState({})
-    const [question, setQuestion] = useState({})
+    /*const [question, setQuestion] = useState({})
     const [questions, setQuestions] = useState([])
     const [answer, setAnswer] = useState({})
-    const [answers, setAnswers] = useState([])
+    const [answers, setAnswers] = useState([])*/
 
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);

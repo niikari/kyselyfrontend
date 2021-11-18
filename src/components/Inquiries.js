@@ -6,6 +6,8 @@ import Loading from "./Loading";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Button from '@mui/material/Button';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 
 export default function Inquiries(props) {
 
@@ -15,9 +17,6 @@ export default function Inquiries(props) {
     // SNACKBAR
     const [open, setOpen] = React.useState(false);
 
-    const handleClick = () => {
-      setOpen(true);
-    };
   
     const handleClose = (event, reason) => {
       if (reason === 'clickaway') {
@@ -42,9 +41,7 @@ export default function Inquiries(props) {
 
     // SNACKBAR LOPPUU
 
-    useEffect(() => fetchInquiries(), [])
-
-    const fetchInquiries = () => {
+    useEffect(() => {
         fetch(`${props.url}/api/inquiries`)
         .then(res => res.json())
         .then(data => {
@@ -52,7 +49,8 @@ export default function Inquiries(props) {
             setLoading(false)
         })
         .catch(err => console.error(err))
-    }
+    }, [props.url])
+
 
     while (loading) {
         return <Loading msg="Ladataan kyselyjä..." />
@@ -74,14 +72,14 @@ export default function Inquiries(props) {
                         },
                     }}
                 >
-                    <Paper elevation={3} style={{margin: 'auto', marginTop: 20}}>
+                    <Paper elevation={3} style={{margin: 'auto', marginTop: 20, padding: 15}}>
                         <h3>{inquiry.name}</h3>
-                        <Link to={`/inquiries/${inquiry.id}`}>
-                            <p>Aloita suorittaminen</p>
+                        <Link style={{ textDecoration: 'none' }} to={`/inquiries/${inquiry.id}`}>
+                            <Button style={{  marginRight: 20 }} variant="outlined">Suorita</Button>
                         </Link>
                         {props.auth && 
-                            <Link to={`/reports/${inquiry.id}`}>
-                                <p>Raportti vastauksista</p>
+                            <Link to={`/reports/${inquiry.id}`} style={{ textDecoration: 'none' }}>
+                                <Button variant="outlined" color="warning" startIcon={<ShowChartIcon />}>Raportti</Button>
                             </Link>
                         }
                     </Paper>

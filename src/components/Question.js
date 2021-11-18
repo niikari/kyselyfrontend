@@ -11,15 +11,13 @@ export default function Question(props) {
     const [answer, setAnswer] = useState({})
     const [disabled, setDisabled] = useState(false)
 
-    useEffect(() => fetchAnswers(), [])
-
     // HAETAAN ANNETUN KYSYMYKSEN MAHDOLLISET VASTAUKSET
-    const fetchAnswers = () => {
+    useEffect(() => {
         fetch(props.question._links.answers.href)
         .then(res => res.json())
         .then(data => setAnswers(data._embedded.answers))
         .catch(err => console.error(err))
-    }
+    }, [props.question._links.answers.href])    
 
     // VASTAAJA VAHVISTAA VASTANNEENSA => LISÄTÄÄN PARENTILLA OLEVAAN STATEEN ANNETTU VASTAUS
     const handleClick = () => {
@@ -32,6 +30,7 @@ export default function Question(props) {
 
     return (
         <>
+        
         <RadioGroup
             aria-label={props.question.quest}
             name="radio-buttons-group"
