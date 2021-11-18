@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Loading from "./Loading";
+import ReportsHandle from "./ReportsHandle";
 
 export default function Reports(props) {
 
     // PROPSISSA TULEE MUKANA MAKER-OLIO JA APIN URL
 
-    const [makerAnswers, setMakerAnswers] = useState([])
+    const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
 
     // REACT ROUTER HAETAAN URL ID JA LUODAAN NAVIGATE OLIO
@@ -22,7 +23,7 @@ export default function Reports(props) {
         })        
         .then(res => res.json())
         .then(data => {
-            setMakerAnswers(data)
+            setData(data)
             setLoading(false)
         })
         .catch(err => {
@@ -39,7 +40,7 @@ export default function Reports(props) {
     // MAPATAAN KAIKKI KYSYMYKSET KYSELYSSÄ LÄPI JA NÄISTÄ ERILLINEN RAPORTTI PER KYSSÄRI
     return (
         <>
-                   
+        <ReportsHandle data={data} />
         </>
     )
 }
