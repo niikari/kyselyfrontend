@@ -39,8 +39,9 @@ export default function Reports(props) {
 
     // MAPATAAN KAIKKI KYSYMYKSET KYSELYSSÄ LÄPI JA NÄISTÄ ERILLINEN RAPORTTI PER KYSSÄRI
     return (
-        <>
+        <div style={{ textAlign: 'center' }}>
+        <h2>{data[0].answer.question.inquiry.name}</h2>
         <ReportsHandle data={data} />
-        </>
+        </div>
     )
 }

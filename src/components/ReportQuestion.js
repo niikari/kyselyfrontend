@@ -23,7 +23,7 @@ export default function ReportQuestion(props) {
     return (
         <div style={{ margin: 'auto', width: '80%' }}>
         <Paper elevation={3} width="auto">
-            <h3>{question}</h3>
+            <p><b>{question}</b></p>
             <BarChart width={1050} height={250} data={answers}>
                 <CartesianGrid strokeDasharray= "3 3" />
                 <XAxis dataKey="key" />
