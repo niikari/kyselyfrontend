@@ -60,7 +60,7 @@ export default function EditInquiryStepper(props) {
       >
         <Typography>{steps[activeStep].label}</Typography>
       </Paper>
-      <Box sx={{ height: 450, maxWidth: 400, width: '92%', p: 2 }}>
+      <Box sx={{ height: 400, maxWidth: 400, width: '92%', p: 2 }}>
         {steps[activeStep].description}
         {activeStep === 0 && 
             <Stack direction="row" style={{ marginTop: 80 }}>
