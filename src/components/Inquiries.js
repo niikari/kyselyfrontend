@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 export default function Inquiries(props) {
 
@@ -61,6 +62,7 @@ export default function Inquiries(props) {
         {
             inquiries.map(inquiry => 
                 <Box
+                    margin={0.2}
                     key={inquiry.id}
                     sx={{
                         display: 'flex',
@@ -75,11 +77,16 @@ export default function Inquiries(props) {
                     <Paper elevation={3} style={{margin: 'auto', marginTop: 20, padding: 15}}>
                         <h3>{inquiry.name}</h3>
                         <Link style={{ textDecoration: 'none' }} to={`/inquiries/${inquiry.id}`}>
-                            <Button style={{  marginRight: 20 }} variant="outlined">Suorita</Button>
+                            <Button style={{  marginRight: 5 }} variant="outlined">Suorita</Button>
                         </Link>
                         {props.auth && 
                             <Link to={`/reports/${inquiry.id}`} style={{ textDecoration: 'none' }}>
-                                <Button variant="outlined" color="warning" startIcon={<ShowChartIcon />}>Raportti</Button>
+                                <Button style={{  marginRight: 5 }} variant="outlined" color="warning" startIcon={<ShowChartIcon />}>Raportti</Button>
+                            </Link>
+                        }
+                        {props.auth && 
+                            <Link to={`/edit/${inquiry.id}`} style={{ textDecoration: 'none' }}>
+                                <Button variant="outlined" color="secondary" startIcon={<ModeEditIcon />}>Muokkaa</Button>
                             </Link>
                         }
                     </Paper>

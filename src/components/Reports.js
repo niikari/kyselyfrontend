@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Loading from "./Loading";
 import ReportsHandle from "./ReportsHandle";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function Reports(props) {
 
     // PROPSISSA TULEE MUKANA MAKER-OLIO JA APIN URL
+
+    // KATSOTAAN TUTKITAANKO RAPORTTIA KÄNNYLLÄ VAI EI
+    const matches = useMediaQuery('(max-width:600px)')
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -39,9 +43,16 @@ export default function Reports(props) {
 
     // MAPATAAN KAIKKI KYSYMYKSET KYSELYSSÄ LÄPI JA NÄISTÄ ERILLINEN RAPORTTI PER KYSSÄRI
     return (
-        <div style={{ textAlign: 'center' }}>
+        <>
+        {props.auth &&
+            <div style={{ textAlign: 'center' }}>
         <h2>{data[0].answer.question.inquiry.name}</h2>
-        <ReportsHandle data={data} />
+        <ReportsHandle data={data} mobile={matches} />
         </div>
+        }
+        {
+            props.auth === false && navigate('/login')
+        }
+        </>
     )
 }

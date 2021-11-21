@@ -21,10 +21,11 @@ export default function ReportQuestion(props) {
     }, [])
     
     return (
-        <div style={{ margin: 'auto', width: '80%' }}>
+        <div>
         <Paper elevation={3} width="auto">
             <p><b>{question}</b></p>
-            <BarChart width={1050} height={250} data={answers}>
+            {props.mobile === false &&
+                <BarChart width={1050} height={350} data={answers}>
                 <CartesianGrid strokeDasharray= "3 3" />
                 <XAxis dataKey="key" />
                 <YAxis />
@@ -32,6 +33,17 @@ export default function ReportQuestion(props) {
                 
                 <Bar dataKey="Vastattu" fill="#82ca9d" />
             </BarChart>
+            }
+            {props.mobile && 
+                <BarChart width={280} height={350} data={answers}>
+                <CartesianGrid strokeDasharray= "1 1" />
+                <XAxis dataKey="key"/>
+                <YAxis />
+                <Tooltip />
+                
+                <Bar dataKey="Vastattu" fill="#82ca9d" />
+            </BarChart>
+            }
         </Paper>
         </div>
     )

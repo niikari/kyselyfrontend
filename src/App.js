@@ -8,18 +8,19 @@ import Login from "./components/Login";
 import Inquiries from "./components/Inquiries";
 import Inquiry from "./components/Inquiry";
 import CreateInquiry from "./components/CreateInquiry";
-import colours from "./images/texture-g9dfd8c623_1920.jpg"
+//import colours from "./images/texture-g9dfd8c623_1920.jpg"
 import Reports from './components/Reports';
 import MenuMobile from "./components/MenuMobile";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import EditInquiry from "./components/EditInquiry";
 
 function App() {
 
-  const url = 'https://kyselybackend123.herokuapp.com'
+  // const url = 'https://kyselybackend123.herokuapp.com'
 
-  // const url = 'http://localhost:8080'
+  const url = 'http://localhost:8080'
 
   // KIRJAUTUMINEN ALKAA
   const [auth, setAuth] = useState(false)
@@ -78,10 +79,10 @@ function App() {
   // SNACKBAR LOPPUU
   
   // <MenuNormal auth={auth} handleLogout={handleLogout}/>
-  
+  //<div className="App" style={{ backgroundImage: `url(${colours})`, minHeight: 1600 }}>
   return (
-    <BrowserRouter>
-      <div className="App" style={{ backgroundImage: `url(${colours})`, height: 1600 }}>
+    <BrowserRouter>      
+      <div className="App">
         <Box sx={{ flexGrow: 1 }}>
           <AppBar color="transparent" position="static" style={{ backgroundColor: 'white' }}>
             <Toolbar>      
@@ -96,10 +97,9 @@ function App() {
           <Route path="/" exact element={<Inquiries url={url} auth={auth}  />} />
           <Route path="/login" exact element={<Login url={url} login={login}  />} />
           <Route path="/inquiries/:id" exact element={<Inquiry url={url} />} />
-          <Route path="/create" exact element={<CreateInquiry url={url} auth={auth} />} />
-          {auth &&
-            <Route path="/reports/:id" exact element={<Reports url={url} />} />
-          }
+          <Route path="/create" exact element={<CreateInquiry url={url} auth={auth} />} />          
+          <Route path="/reports/:id" exact element={<Reports url={url} auth={auth} />} />
+          <Route path="/edit/:id" exact element={<EditInquiry url={url} auth={auth} />} />
         </Routes>
       </div>
       <Snackbar

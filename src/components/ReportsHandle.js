@@ -34,11 +34,11 @@ export default function ReportsHandle(props) {
     }
     
     return (
-        <>
+        <div style={{ margin: 'auto', width: '80%' }}>
         {
             Object.keys(data).map((question, index) =>
-            <ReportQuestion question={question} key={index} answers={data[question]} />)
+            <ReportQuestion question={question} key={index} answers={data[question]} mobile={props.mobile}/>)
         }
-        </>
+        </div>
     )
 }
