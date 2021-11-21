@@ -69,24 +69,25 @@ export default function Inquiries(props) {
                         flexWrap: 'wrap',
                         '& > :not(style)': {
                         m: 1,
-                        width: 380,
-                        height: 128,
+                        width: 300,
+                        height: 260,
                         },
                     }}
                 >
                     <Paper elevation={3} style={{margin: 'auto', marginTop: 20, padding: 15}}>
                         <h3>{inquiry.name}</h3>
                         <Link style={{ textDecoration: 'none' }} to={`/inquiries/${inquiry.id}`}>
-                            <Button style={{  marginRight: 5 }} variant="outlined">Suorita</Button>
-                        </Link>
+                            <Button style={{  margin: 5 }} variant="outlined">Suorita</Button>
+                        </Link><br></br>
                         {props.auth && 
                             <Link to={`/reports/${inquiry.id}`} style={{ textDecoration: 'none' }}>
-                                <Button style={{  marginRight: 5 }} variant="outlined" color="warning" startIcon={<ShowChartIcon />}>Raportti</Button>
+                                <Button style={{  margin: 5 }} variant="outlined" color="warning" startIcon={<ShowChartIcon />}>Raportti</Button>
                             </Link>
                         }
+                        <br></br>
                         {props.auth && 
                             <Link to={`/edit/${inquiry.id}`} style={{ textDecoration: 'none' }}>
-                                <Button variant="outlined" color="secondary" startIcon={<ModeEditIcon />}>Muokkaa</Button>
+                                <Button style={{  margin: 5 }} variant="outlined" color="secondary" startIcon={<ModeEditIcon />}>Muokkaa</Button>
                             </Link>
                         }
                     </Paper>
