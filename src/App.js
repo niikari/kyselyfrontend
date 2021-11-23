@@ -20,7 +20,7 @@ function App() {
 
   // const url = 'https://kyselybackend123.herokuapp.com'
 
-  const url = 'http://localhost:8080'
+  const url = 'https://kyselybackend123.herokuapp.com'
 
   // KIRJAUTUMINEN ALKAA
   const [auth, setAuth] = useState(false)
