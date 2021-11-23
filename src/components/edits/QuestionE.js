@@ -26,6 +26,7 @@ export default function QuestionE(props) {
     }
     return(
         <Paper style={{margin:'auto', width:'80%', padding:30, marginTop:30}}>
+            <h1>question name: {props.question.quest}</h1>
             <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={inputChanged} value={name}/>
             <Button onClick={() => props.editQuestionName(props.question, name)}>edit question {props.question.quest} name</Button>
             {answers.map((a, index) => <AnswerE key={index} answer={a}/>)}

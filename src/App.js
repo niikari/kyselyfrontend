@@ -18,9 +18,8 @@ import EditInquiry from "./components/EditInquiry";
 
 function App() {
 
-  // const url = 'https://kyselybackend123.herokuapp.com'
-
   const url = 'https://kyselybackend123.herokuapp.com'
+
 
   // KIRJAUTUMINEN ALKAA
   const [auth, setAuth] = useState(false)
