@@ -90,12 +90,13 @@ export default function EditInquiry(props) {
         .catch(err => console.error(err))
     }
 
+
     while (loading) {
         return <Loading msg="Ladataan kyselyä..." />
     }
 
     return (
-        <div>
+        <div style={{width:'80%', margin:'auto'}}>
         <InquiryE
             inquiry={inquiry} 
             questions={questions} 
@@ -104,7 +105,12 @@ export default function EditInquiry(props) {
             editInquiryName={editInquiryName}
             />
         {
-            questions.map((q,index) => <QuestionE editQuestionName={editQuestionName} question={q} key={index}/>)
+            questions.map((q,index) => 
+            <QuestionE 
+            deleteQuestion={deleteQuestion}
+            editQuestionName={editQuestionName}
+            question={q}
+            key={index}/>)
         }
         </div>
     )
