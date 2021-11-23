@@ -20,6 +20,10 @@ import { Navigation, Pagination } from 'swiper';
 // Direct React component imports
 import SwiperCore,{ Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { Thumbs } from 'swiper';
+// Styles must use direct files imports
+import 'swiper/swiper.scss'; // core Swiper
+import 'swiper/modules/navigation/navigation.scss'; // Navigation module
+import 'swiper/modules/pagination/pagination.scss'; // Pagination module
 
 export default function Inquiry(props) {
 
@@ -40,6 +44,10 @@ export default function Inquiry(props) {
 
     // LAITETAAN LÄHETYSNAPPI POIS KÄYTETTÄVISTÄ VASTAUSTEN LÄHETYSTEN JÄLKEEN
     const [disabled, setDisabled] = useState(false)
+
+    // SWIPER THUMB TOIMINTO
+    const [thumbsSwiper, setThumbsSwiper] = React.useState(null);
+
 
     // SNACKBAR ALKAA
     const [open, setOpen] = useState(false)
@@ -169,7 +177,7 @@ export default function Inquiry(props) {
                 questions.map((question, index) =>
                 <SwiperSlide>
                 
-                <Paper style={{ width: '50%', height: 400, margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
+                <Paper style={{ width: '50%', height: 400, margin: 'auto', padding: 50, marginBottom: 30, textAlign:'left' }} elevation={3} key={index}>
                 
                 <FormControl key={index} component="fieldset">
                     <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
