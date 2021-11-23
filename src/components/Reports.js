@@ -32,7 +32,6 @@ export default function Reports(props) {
         })
         .catch(err => {
             console.error(err)
-            navigate('/login')
         })
     }, [id, navigate, props.url])
 
@@ -42,6 +41,7 @@ export default function Reports(props) {
     }
 
     // MAPATAAN KAIKKI KYSYMYKSET KYSELYSSÄ LÄPI JA NÄISTÄ ERILLINEN RAPORTTI PER KYSSÄRI
+    // JOS VASTAUKSIA EI OLE => RENDERÖIDÄÄN "EI ANNETTUJA VASTAUKSIA VIELÄ, MUUTEN TULEE ERROR"
     return (
         <>
         {props.auth &&

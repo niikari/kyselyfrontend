@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import TextField from '@mui/material/TextField';
-import { useNavigate } from "react-router";
 
 
 const steps = [
@@ -30,16 +29,11 @@ const steps = [
 export default function CreateInquiry(props) {
 
     const [inquiry, setInquiry] = useState({})
-    /*const [question, setQuestion] = useState({})
-    const [questions, setQuestions] = useState([])
-    const [answer, setAnswer] = useState({})
-    const [answers, setAnswers] = useState([])*/
 
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = steps.length;
 
-    const navigate = useNavigate()
   
     const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);

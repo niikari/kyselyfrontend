@@ -12,7 +12,7 @@ export default function ReportsHandle(props) {
     useEffect(() => {
         const arr = answers.map(answer => 
             ({
-                question: answer.answer.question.quest,
+                question: answer.answer.question.quest, 
                 givenAnswer: answer.answer.answer,
                 openAnswer: answer.answer.question.openQuestion,
                 givenOpenAnswer: answer.openAnswer
@@ -21,7 +21,7 @@ export default function ReportsHandle(props) {
         
         addToData(arr)
 
-    }, [])
+    }, [answers])
 
     const addToData = (arr) => {
         const data = _.groupBy(arr, 'question')
@@ -37,7 +37,9 @@ export default function ReportsHandle(props) {
         <div style={{ margin: 'auto', width: '80%' }}>
         {
             Object.keys(data).map((question, index) =>
-            <ReportQuestion question={question} key={index} answers={data[question]} mobile={props.mobile}/>)
+            <ReportQuestion question={question} key={index} answers={data[question]} mobile={props.mobile}/>
+            
+            )
         }
         </div>
     )

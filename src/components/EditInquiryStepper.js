@@ -9,6 +9,8 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import TextField from '@mui/material/TextField';
 import { Stack } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function EditInquiryStepper(props) {
 
@@ -18,12 +20,10 @@ export default function EditInquiryStepper(props) {
           description: `Kyselysi nimi nyt: ${props.inquiry.name}`,
         },
         {
-          label: 'Muokkaa tai vaihda kysymyksiä',
-          description:
-            `Kysymyksiä nyt yhteensä: ${props.questions.length}`,
+          label: 'Muokkaa tai poista kysymyksiä'
         },
         {
-          label: 'Muokkaa tai vaihda tietyn kysymyksen vastauksia',
+          label: 'Lisää uusi kysymys kyselyysi',
           description: `Tähän jotain infoa...`,
         },
       ];
@@ -77,7 +77,13 @@ export default function EditInquiryStepper(props) {
         }
         {activeStep === 1 &&
             props.questions.map((question, index) =>
-            <p key={index}>{index + 1}) {question.quest}</p>)
+            <div key={index}>
+              <p>{index + 1}) {question.quest}</p>
+              <Stack direction="row">
+              <Button color="info" startIcon={<EditIcon />} />
+              <Button onClick={() => props.deleteQuestion(question)} color="error" startIcon={<DeleteIcon />} />
+              </Stack>
+            </div>)
         }
       </Box>
       <MobileStepper

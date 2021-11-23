@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
 import _ from "lodash";
 import Paper from '@mui/material/Paper';
 
@@ -18,14 +18,14 @@ export default function ReportQuestion(props) {
         )
 
         setAnswers(arr)
-    }, [])
+    }, [props.answers])
     
     return (
         <div>
-        <Paper elevation={3} width="auto">
+        <Paper elevation={3} width="auto" >
             <p><b>{question}</b></p>
             {props.mobile === false &&
-                <BarChart width={1050} height={350} data={answers}>
+                <BarChart width={1050} height={350} data={answers} >
                 <CartesianGrid strokeDasharray= "3 3" />
                 <XAxis dataKey="key" />
                 <YAxis />

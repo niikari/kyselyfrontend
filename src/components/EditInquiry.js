@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
 import Loading from "./Loading";
-import Stack from '@mui/material/Stack';
 import EditInquiryStepper from "./EditInquiryStepper";
 
 export default function EditInquiry(props) {
@@ -13,9 +10,6 @@ export default function EditInquiry(props) {
     const [inquiry, setInquiry] = useState({})
     const [questions, setQuestions] = useState([])
     const [loading, setLoading] = useState(true)
-
-    // UUSIA MUOKATTUJA ARVOJA
-    const [inquiryName, setInquiryName] = useState('')
 
     useEffect(() =>  fetchInquiry() ,[])
 
@@ -58,6 +52,22 @@ export default function EditInquiry(props) {
         .catch(err => console.error(err))
     }
 
+    const deleteQuestion = (question) => {
+        fetch(question._links.self.href, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('jwt')
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                //fetchInquiry()
+            }
+        })
+        .catch(err => console.error(err))
+    }
+
     while (loading) {
         return <Loading msg="Ladataan kyselyä..." />
     }
@@ -68,6 +78,7 @@ export default function EditInquiry(props) {
             inquiry={inquiry} 
             questions={questions} 
             editInquiryName={editInquiryName}
+            deleteQuestion={deleteQuestion}
             />
         </div>
     )

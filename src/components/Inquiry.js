@@ -14,7 +14,12 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useParams } from "react-router";
-import Carousel from 'react-material-ui-carousel'
+
+// SWIPER
+import { Navigation, Pagination } from 'swiper';
+// Direct React component imports
+import SwiperCore,{ Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { Thumbs } from 'swiper';
 
 export default function Inquiry(props) {
 
@@ -150,15 +155,20 @@ export default function Inquiry(props) {
 
     return (
         <div style={{ marginTop: 20, textAlign: 'center' }}>
-            <Carousel
-                autoPlay={false}
-                animation="slide"
-                cycleNavigation={false}
-                navButtonsAlwaysVisible
-                >            
+            <Swiper
+        
+        modules={[Navigation, Pagination, Thumbs]}
+        spaceBetween={50}
+        pagination={{ clickable: true }}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+        navigation={true}
+
+        >            
             {
                 questions.map((question, index) =>
-                // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
+                <SwiperSlide>
+                
                 <Paper style={{ width: '50%', height: 400, margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
                 
                 <FormControl key={index} component="fieldset">
@@ -168,9 +178,10 @@ export default function Inquiry(props) {
                         {question.normQuestion && <Question question={question} add={addNewAnswers} index={index}  />}
                     </FormControl> 
                     
-                </Paper>)
+                </Paper>
+                </SwiperSlide>)
             }
-            </Carousel>
+            </Swiper>
         <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
         <Snackbar
         open={open}
