@@ -89,7 +89,7 @@ export default function QuestionE(props) {
     return(
         <Paper style={{margin:'auto', width:'80%', padding:30, marginTop:30, backgroundColor:'#FFFAF0'}}>
             <Button aria-label="delete" color="error" size="small" onClick={() => props.deleteQuestion(props.question)} > <CloseIcon/></Button>
-            <Button size="small" variant="contained" onClick={() => setOpen(true)} >new answer</Button>
+            { !props.question.openQuestion &&  <Button size="small" variant="contained" onClick={() => setOpen(true)} >new answer</Button>}
             <h1>question name: {props.question.quest}</h1>
             <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={inputChanged} value={name}/>
             <Button onClick={() => props.editQuestionName(props.question, name)}>change question</Button>
