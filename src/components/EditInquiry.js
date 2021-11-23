@@ -8,6 +8,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function EditInquiry(props) {
 
@@ -16,8 +19,15 @@ export default function EditInquiry(props) {
     const [inquiry, setInquiry] = useState({})
     const [questions, setQuestions] = useState([])
     const [loading, setLoading] = useState(true)
+
+    //kysymyksen luonti
     const [newQuest, setNewQuest] = useState('')
     const [open, setOpen] = React.useState(false);
+
+    //kysymyksien tapa (radio, normi tai open)
+    const [multiple, setMultiple] = React.useState(false);
+    const [openQuest, setOpenQuest] = React.useState(false);
+    const [norm, setNorm] = React.useState(true);
 
     useEffect(() => console.log(iName),[iName])
     useEffect(() =>  fetchInquiry() ,[])
@@ -65,7 +75,12 @@ export default function EditInquiry(props) {
                 'Content-Type': 'application/json',
                 'Authorization': sessionStorage.getItem('jwt')
             },
-            body: JSON.stringify({quest: newQuest, inquiry: inquiry._links.self.href })
+            body: JSON.stringify({
+                quest: newQuest,
+                inquiry: inquiry._links.self.href,
+                multipleAnswers:multiple,
+                openQuestion:openQuest,
+                normQuestion:norm  })
         })
         .then(res => {
             if (res.ok) {
@@ -136,7 +151,13 @@ export default function EditInquiry(props) {
 
     return (
         <div style={{width:'80%', margin:'auto'}}>
-         <Button onClick={() => setOpen(true)} endIcon={<AddIcon/>}>Add a Question</Button>
+         <Button 
+         onClick={() => setOpen(true)} 
+         variant="contained" endIcon={<AddIcon/>} 
+         style={{marginTop:10}}>
+             Add a Question
+        </Button> 
+
             <InquiryE
                 inquiry={inquiry} 
                 questions={questions} 
@@ -155,16 +176,47 @@ export default function EditInquiry(props) {
 
             <Button 
             aria-label="delete" 
-            color="error" size="small" 
-            onClick={() => deleteInquiry(inquiry)} >
+            color="error" 
+            size="small" 
+            onClick={() => deleteInquiry(inquiry)}
+            style={{marginTop:20}}>
                 Delete Inquiry
             </Button>
 
             <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogContent>
+
             <p>Create a Question</p>
             <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={(e) => setNewQuest(e.target.value)} value={newQuest}/>
-            <Button onClick={()=>createButtonClicked()}>create</Button>
+            <RadioGroup>
+            <FormControlLabel 
+                    onChange={() => {
+                        setMultiple(true) 
+                        setOpenQuest(false)
+                        setNorm(false)}}
+                    value={1} 
+                    control={<Radio />} 
+                    label='monivalinta'/>
+            
+            <FormControlLabel 
+                    onChange={() => {
+                        setOpenQuest(true) 
+                        setMultiple(false)
+                        setNorm(false)}}
+                    value={2} 
+                    control={<Radio />} 
+                    label='teksti vastaus'/>
+            <FormControlLabel 
+                    onChange={() => {
+                        setMultiple(false)
+                        setOpenQuest(false)
+                        setNorm(true)}}
+                    value={3}
+                    control={<Radio />} 
+                    label='tavallinen'/>
+            </RadioGroup>
+           <Button onClick={()=>createButtonClicked()}>create</Button>
+        
         </DialogContent>
         </Dialog>
         
