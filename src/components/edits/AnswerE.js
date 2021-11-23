@@ -24,6 +24,7 @@ export default function AnswerE(props) {
             onClick={() => props.deleteAnswer(props.answer)} >
                  <CloseIcon/>
             </Button>
+            
         <p>answer: {props.answer.answer}</p>
         <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={inputChanged} value={name}/>
         <Button onClick={() => props.editAnswerName(props.answer, name)}>edit answer</Button>
