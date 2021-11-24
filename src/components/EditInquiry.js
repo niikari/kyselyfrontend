@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Loading from "./Loading";
 import InquiryE from './edits/InquiryE';
 import QuestionE from './edits/QuestionE';
@@ -11,6 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Login from "./Login";
 
 export default function EditInquiry(props) {
 
@@ -19,6 +20,8 @@ export default function EditInquiry(props) {
     const [inquiry, setInquiry] = useState({})
     const [questions, setQuestions] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const navigate = useNavigate()
 
     //kysymyksen luonti
     const [newQuest, setNewQuest] = useState('')
@@ -29,8 +32,9 @@ export default function EditInquiry(props) {
     const [openQuest, setOpenQuest] = React.useState(false);
     const [norm, setNorm] = React.useState(true);
 
-    useEffect(() => console.log(iName),[iName])
     useEffect(() =>  fetchInquiry() ,[])
+
+
 
     const fetchInquiry = () => {
         fetch(`${props.url}/api/inquiries/${id}`)
@@ -51,7 +55,6 @@ export default function EditInquiry(props) {
     }
 
     const editInquiryName = () => {
-        console.log(`Inquiry new name: ${iName}`);
         fetch(inquiry._links.self.href, {
             method: 'PUT',
             headers: {
@@ -122,7 +125,6 @@ export default function EditInquiry(props) {
     }
 
     const editQuestionName = (question, name) => {
-        console.log(`questions new name: ${name}`);
         fetch(question._links.self.href, {
             method: 'PUT',
             headers: {
@@ -150,7 +152,7 @@ export default function EditInquiry(props) {
     }
 
     return (
-        <div style={{width:'80%', margin:'auto'}}>
+            <div style={{width:'80%', margin:'auto'}}>
          <Button 
          onClick={() => setOpen(true)} 
          variant="contained" endIcon={<AddIcon/>} 
@@ -221,5 +223,6 @@ export default function EditInquiry(props) {
         </Dialog>
         
         </div>
+        
     )
 }

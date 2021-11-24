@@ -18,7 +18,7 @@ import { useParams } from "react-router";
 // SWIPER
 import { Navigation, Pagination } from 'swiper';
 // Direct React component imports
-import SwiperCore,{ Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { Thumbs } from 'swiper';
 // Styles must use direct files imports
 import 'swiper/swiper.scss'; // core Swiper
@@ -46,7 +46,7 @@ export default function Inquiry(props) {
     const [disabled, setDisabled] = useState(false)
 
     // SWIPER THUMB TOIMINTO
-    const [thumbsSwiper, setThumbsSwiper] = React.useState(null);
+    // const [thumbsSwiper, setThumbsSwiper] = React.useState(null);
 
 
     // SNACKBAR ALKAA

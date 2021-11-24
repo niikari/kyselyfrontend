@@ -10,7 +10,6 @@ export default function AnswerE(props) {
 
     const inputChanged = (e) => {
         setName(e.target.value);
-        console.log(props.name);
     }
 
 

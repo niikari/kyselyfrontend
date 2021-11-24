@@ -14,8 +14,6 @@ export default function QuestionE(props) {
     const [answers, setAnswers] = React.useState([]);
     const [newAnswer, setNewAnswer] = React.useState('');
 
-    React.useEffect(() => console.log(answers),[answers])
-    React.useEffect(() => console.log(name),[name])
     React.useEffect(() => fetchAnswers(),[])
     
     const fetchAnswers = () => {
@@ -23,7 +21,6 @@ export default function QuestionE(props) {
         .then(res => res.json())
         .then(data => setAnswers(data._embedded.answers))
         .catch(err => console.error(err))
-        console.log(answers);
     }
 
     
@@ -44,7 +41,6 @@ export default function QuestionE(props) {
     }
     
     const editAnswerName = (answer, name) => {
-        console.log(`answers new name: ${name}`);
         fetch(answer._links.self.href, {
             method: 'PUT',
             headers: {
@@ -84,7 +80,6 @@ export default function QuestionE(props) {
 
     const inputChanged = (e) => {
         setName(e.target.value);
-        console.log(name);
     }
     return(
         <Paper style={{margin:'auto', width:'80%', padding:30, marginTop:30, backgroundColor:'#FFFAF0'}}>

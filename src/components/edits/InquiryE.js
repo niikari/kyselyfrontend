@@ -7,7 +7,6 @@ export default function InquiryE(props) {
 
     const inputChanged = (e) => {
         props.setName(e.target.value);
-        console.log(props.name);
     }
 
     return(
