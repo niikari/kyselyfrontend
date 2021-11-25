@@ -182,13 +182,13 @@ export default function EditInquiry(props) {
             size="small" 
             onClick={() => deleteInquiry(inquiry)}
             style={{marginTop:20}}>
-                Delete Inquiry
+                Poista kysely
             </Button>
 
             <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogContent>
 
-            <p>Create a Question</p>
+            <p>Luo kysymys</p>
             <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={(e) => setNewQuest(e.target.value)} value={newQuest}/>
             <RadioGroup>
             <FormControlLabel 
@@ -217,7 +217,7 @@ export default function EditInquiry(props) {
                     control={<Radio />} 
                     label='tavallinen'/>
             </RadioGroup>
-           <Button onClick={()=>createButtonClicked()}>create</Button>
+           <Button onClick={()=>createButtonClicked()}>Luo</Button>
         
         </DialogContent>
         </Dialog>
