@@ -157,7 +157,7 @@ export default function EditInquiry(props) {
          onClick={() => setOpen(true)} 
          variant="contained" endIcon={<AddIcon/>} 
          style={{marginTop:10}}>
-             Add a Question
+             lisää uusi kysymys
         </Button> 
 
             <InquiryE

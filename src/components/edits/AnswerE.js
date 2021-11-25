@@ -24,7 +24,7 @@ export default function AnswerE(props) {
                  <CloseIcon/>
             </Button>
             
-        <p>answer: {props.answer.answer}</p>
+        <p>Vastaus: {props.answer.answer}</p>
         <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={inputChanged} value={name}/>
         <Button onClick={() => props.editAnswerName(props.answer, name)}>Muuta kysymystä</Button>
         </Paper>
