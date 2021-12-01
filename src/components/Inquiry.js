@@ -1,3 +1,5 @@
+
+   
 import React, { useEffect, useState } from "react";
 import Paper from '@mui/material/Paper';
 import FormControl from '@mui/material/FormControl';
@@ -11,14 +13,23 @@ import Loading from "./Loading";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Report from "./Reports";
+import { useParams } from "react-router";
+
+// SWIPER
+import { Navigation, Pagination } from 'swiper';
+// Direct React component imports
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+import { Thumbs } from 'swiper';
+// Styles must use direct files imports
+import 'swiper/swiper.scss'; // core Swiper
+import 'swiper/modules/navigation/navigation.scss'; // Navigation module
+import 'swiper/modules/pagination/pagination.scss'; // Pagination module
 
 export default function Inquiry(props) {
 
-    // BACKENDIN OSOITE, TUOTANNOSSAHAN VAIHTUU
-    // const url = 'https://kyselybackend123.herokuapp.com'
-
     const url = props.url
+
+    const { id } = useParams()
 
     const [questions, setQuestions] = useState([])
 
@@ -34,13 +45,13 @@ export default function Inquiry(props) {
     // LAITETAAN LÄHETYSNAPPI POIS KÄYTETTÄVISTÄ VASTAUSTEN LÄHETYSTEN JÄLKEEN
     const [disabled, setDisabled] = useState(false)
 
+    // SWIPER THUMB TOIMINTO
+    // const [thumbsSwiper, setThumbsSwiper] = React.useState(null);
+
+
     // SNACKBAR ALKAA
     const [open, setOpen] = useState(false)
     const [msg, setMsg] = useState('')
-
-    const handleClick = () => {
-        setOpen(true)
-    }
     
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -68,11 +79,11 @@ export default function Inquiry(props) {
     // HAETAAN ENSIN KYSELY
     // MÄÄRITELLÄÄN SELECTINQUIRY.JS -TIEDOSTOSSA (PROPS) MIKÄ PATTERISTO OTETAAN NÄYTILLE
     useEffect(() => {
-        console.log(props.inquiry._links.inquiry.href)
-        fetch(props.inquiry._links.inquiry.href)
+        fetch(`${props.url}/api/inquiries/${id}`)
         .then(res => res.json())
         .then(data => fetchQuestions(data._links.questions.href))
-    }, [])
+        .catch(err => console.error(err))
+    }, [props.url, id])
 
     // HAETAAN SITTEN TIETYN KYSELYN KYSYMYKSET
     const fetchQuestions = (url) => {
@@ -139,6 +150,7 @@ export default function Inquiry(props) {
     const addNewListOfAnswers = (arr) => {
         setAnswers([...answers, ...arr])
     }
+
     
     // NÄYTETÄÄN LOADING KUNNES KYSYMYKSET ON LADATTU
     while (loading) {
@@ -151,28 +163,43 @@ export default function Inquiry(props) {
 
     return (
         <div style={{ marginTop: 20, textAlign: 'center' }}>
-        {
-            questions.map((question, index) =>
-            // TÄÄLLÄ IF-LAUSEKE (JOS QUESTION MONIVALINTA, VAPAAKENTTÄ TAI VAIN YKSI VALINTAINEN RADIOKYSYMYS)
-            <Paper style={{ width: '30%', margin: 'auto', padding: 40, marginTop: 20, textAlign:'left' }} elevation={3} key={index}>
-               <FormControl key={index} component="fieldset">
-                <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
-                    {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} />}
-                    {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} />}
-                    {question.normQuestion && <Question question={question} add={addNewAnswers} />}
-                </FormControl> 
+            <Swiper
+        
+        modules={[Navigation, Pagination, Thumbs]}
+        spaceBetween={50}
+        pagination={{ clickable: true }}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+        navigation={true}
+
+        >            
+            {
+                questions.map((question, index) =>
+                <SwiperSlide>
                 
-            </Paper>)
-        }
-        <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="outlined">Lähetä vastaukset</Button>
+                <Paper style={{ width: '50%', height: 400, margin: 'auto', padding: 50, marginBottom: 30, textAlign:'left' }} elevation={3} key={index}>
+                
+                <FormControl key={index} component="fieldset">
+                    <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
+                        {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} index={index} />}
+                        {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} index={index}  />}
+                        {question.normQuestion && <Question question={question} add={addNewAnswers} index={index}  />}
+                    </FormControl> 
+                    
+                </Paper>
+                </SwiperSlide>)
+            }
+            </Swiper>
+        <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
         <Snackbar
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
         message={msg}
         action={action}
-      />
-      {disabled && <Report maker={maker} url={url}/>}
+        />
+        
+      
         </div>
     )
 }
