@@ -168,8 +168,6 @@ export default function Inquiry(props) {
         modules={[Navigation, Pagination, Thumbs]}
         spaceBetween={50}
         pagination={{ "type": "progressbar" }}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
         >            
             {
                 questions.map((question, index) =>
