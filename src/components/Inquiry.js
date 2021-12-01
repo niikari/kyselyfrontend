@@ -167,11 +167,7 @@ export default function Inquiry(props) {
         
         modules={[Navigation, Pagination, Thumbs]}
         spaceBetween={50}
-        pagination={{ clickable: true }}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
-        navigation={true}
-
+        pagination={{ "type": "progressbar" }}
         >            
             {
                 questions.map((question, index) =>
@@ -189,8 +185,13 @@ export default function Inquiry(props) {
                 </Paper>
                 </SwiperSlide>)
             }
+             <SwiperSlide>
+                <Paper style={{ width: '40%', height: 300, margin: 'auto', padding: 50, marginTop: 10, marginBottom: 10, textAlign:'center' }} elevation={3}>
+                <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
+                </Paper>
+                </SwiperSlide>
             </Swiper>
-        <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
+       
         <Snackbar
         open={open}
         autoHideDuration={3000}
