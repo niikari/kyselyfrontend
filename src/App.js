@@ -8,7 +8,7 @@ import Login from "./components/Login";
 import Inquiries from "./components/Inquiries";
 import Inquiry from "./components/Inquiry";
 import CreateInquiry from "./components/CreateInquiry";
-//import colours from "./images/texture-g9dfd8c623_1920.jpg"
+import colours from "./images/texture-g9dfd8c623_1920.jpg"
 import Reports from './components/Reports';
 import MenuMobile from "./components/MenuMobile";
 import Snackbar from '@mui/material/Snackbar';
@@ -74,12 +74,12 @@ function App() {
   )
 
   // SNACKBAR LOPPUU
-  
+  //<div className="App">
   // <MenuNormal auth={auth} handleLogout={handleLogout}/>
-  //<div className="App" style={{ backgroundImage: `url(${colours})`, minHeight: 1600 }}>
+  //
   return (
     <BrowserRouter>      
-      <div className="App">
+    <div className="App" style={{ backgroundImage: `url(${colours})`, minHeight: 950 }}>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar color="transparent" position="static" style={{ backgroundColor: 'white' }}>
             <Toolbar>      
