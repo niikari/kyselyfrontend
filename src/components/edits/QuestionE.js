@@ -82,9 +82,9 @@ export default function QuestionE(props) {
         setName(e.target.value);
     }
     return(
-        <Paper style={{margin:'auto', width:'80%', padding:30, marginTop:30, backgroundColor:'#FFFAF0'}}>
+        <Paper style={{margin:'auto', width:'80%', padding:30, marginTop:30}}>
             <Button aria-label="delete" color="error" size="small" onClick={() => props.deleteQuestion(props.question)} > <CloseIcon/></Button>
-            { !props.question.openQuestion &&  <Button size="small" variant="contained" onClick={() => setOpen(true)} >uusi kysymys</Button>}
+            { !props.question.openQuestion &&  <Button size="small" variant="contained" onClick={() => setOpen(true)} >uusi vastausvaihtoehto</Button>}
             <h1>Kysymys:  {props.question.quest}</h1>
             <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={inputChanged} value={name}/>
             <Button onClick={() => props.editQuestionName(props.question, name)}>muuta kysymystä</Button>

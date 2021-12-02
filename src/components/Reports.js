@@ -13,13 +13,15 @@ export default function Reports(props) {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
-
+    
     // REACT ROUTER HAETAAN URL ID JA LUODAAN NAVIGATE OLIO
     const { id } = useParams()
     const navigate = useNavigate()
 
+    useEffect(() => console.log(data),[data])
+
     useEffect(() => {
-        fetch(`${props.url}/reports/${id}`, {
+        fetch(`${props.url}/${props.what}/${id}`, {
             method: 'GET',
             headers: {
                 'Authorization': sessionStorage.getItem('jwt')
@@ -46,7 +48,6 @@ export default function Reports(props) {
         <>
         {props.auth &&
             <div style={{ textAlign: 'center' }}>
-        <h2>{data[0].answer.question.inquiry.name}</h2>
         <ReportsHandle data={data} mobile={matches} />
         </div>
         }

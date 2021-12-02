@@ -13,7 +13,10 @@ import Loading from "./Loading";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import Reports from './Reports';
 
 // SWIPER
 import { Navigation, Pagination } from 'swiper';
@@ -31,6 +34,9 @@ export default function Inquiry(props) {
 
     const { id } = useParams()
 
+    //open results bar
+    const [openResult, setOpenResult] = useState(false);
+
     const [questions, setQuestions] = useState([])
 
     // TEKIJÄ, VIELÄ EI KÄYTETÄ MUTTA SITTEN KUN RAPORTTIA LÄHDETÄÄN TEKEMÄÄN TARVITAAN
@@ -45,6 +51,8 @@ export default function Inquiry(props) {
     // LAITETAAN LÄHETYSNAPPI POIS KÄYTETTÄVISTÄ VASTAUSTEN LÄHETYSTEN JÄLKEEN
     const [disabled, setDisabled] = useState(false)
 
+    const navigate = useNavigate()
+
     // SWIPER THUMB TOIMINTO
     // const [thumbsSwiper, setThumbsSwiper] = React.useState(null);
 
@@ -52,15 +60,17 @@ export default function Inquiry(props) {
     // SNACKBAR ALKAA
     const [open, setOpen] = useState(false)
     const [msg, setMsg] = useState('')
+    useEffect(() => console.log(maker), [maker])
     
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
           return
         }
-    
         setOpen(false)
     }
     
+    useState(() => console.log(maker),[maker])
+
     const action = (
         <React.Fragment>
           <IconButton
@@ -107,15 +117,16 @@ export default function Inquiry(props) {
         })
         .then(res => res.json())
         .then(data => {
-            postAnswers(data._links.maker.href)
-            setMaker(data)
+            postAnswers(data._links.maker.href, data.id)
             setDisabled(true)
+            
+            setMaker(data)
         })
         .catch(err => console.error(err))
     }
 
     // LÄHETETÄÄN BACKENDIIN => MAKER, KYSYMYS JA MAHDOLLINEN AVOIN VASTAUS (SIELLÄ LISÄTAULU VASTAAJAN VASTAUKSILLE)
-    const postAnswers = (makerUrl) => {
+    const postAnswers = (makerUrl, makerId) => {
         answers.forEach(function (answer, index) {
             fetch(`${url}/api/makerAnswers`, {
             method: 'POST',
@@ -128,17 +139,20 @@ export default function Inquiry(props) {
                 "answer": answer._links.self.href
             })
             })
-            .then(res => {
-                if (res.ok) {
+            .then(res => res.json())
+            .then(_ => {
                     setMsg('Vastaukset lähetetty')
                     setOpen(true)
-                }
+                    
             })
             .catch(err => {
                 console.error(err)
                 setMsg('Hups, jokin meni pieleen...')
             })
+            
         })
+        console.log(makerId)
+        navigate(`/makeranswers/${makerId}`)
     }
     
     // LISÄTÄÄN ANNETUT VASTAUKSET STATEEN. TÄMÄ FUNKTIO ANNETAAN CHILDIEN KÄYTTÖÖN
@@ -164,7 +178,6 @@ export default function Inquiry(props) {
     return (
         <div style={{ marginTop: 20, textAlign: 'center' }}>
             <Swiper
-        
         modules={[Navigation, Pagination, Thumbs]}
         spaceBetween={50}
         pagination={{ clickable: true }}
@@ -184,12 +197,13 @@ export default function Inquiry(props) {
                         {question.openQuestion && <QuestionOpen question={question} add={addNewAnswers} index={index} />}
                         {question.multipleAnswers && <QuestionMulti question={question} add={addNewListOfAnswers} index={index}  />}
                         {question.normQuestion && <Question question={question} add={addNewAnswers} index={index}  />}
-                    </FormControl> 
-                    
+                    </FormControl>
                 </Paper>
+
                 </SwiperSlide>)
             }
             </Swiper>
+
         <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
         <Snackbar
         open={open}
@@ -198,8 +212,7 @@ export default function Inquiry(props) {
         message={msg}
         action={action}
         />
-        
-      
+    
         </div>
     )
 }

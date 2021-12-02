@@ -10,7 +10,7 @@ export default function InquiryE(props) {
     }
 
     return(
-        <Paper style={{margin:'auto', width:'80%', padding:30, marginTop:30, backgroundColor:'#FFFAF0'}}>
+        <Paper style={{margin:'auto', width:'80%', padding:30, marginTop:30}}>
             <h1>Kyselyn nimi: {props.inquiry.name}</h1>
             <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={inputChanged} value={props.name}/>
             <Button onClick={() => props.editInquiryName()}>muuta kyselyn nimeä</Button>

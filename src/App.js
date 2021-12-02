@@ -98,8 +98,9 @@ function App() {
           <Route path="/login" exact element={<Login url={url} login={login}  />} />
           <Route path="/inquiries/:id" exact element={<Inquiry url={url} />} />
           <Route path="/create" exact element={<CreateInquiry url={url} auth={auth} />} />          
-          <Route path="/reports/:id" exact element={<Reports url={url} auth={auth} />} />
+          <Route path="/reports/:id" exact element={<Reports url={url} what="reports" auth={auth} />} />
           <Route path="/edit/:id" exact element={<EditInquiry url={url} auth={auth} />} />
+          <Route path="/makeranswers/:id" exact element={<Reports url={url} what="makeranswers" auth={auth} />} />
         </Routes>
       </div>
       <Snackbar
