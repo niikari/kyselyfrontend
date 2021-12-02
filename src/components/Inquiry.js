@@ -162,6 +162,7 @@ export default function Inquiry(props) {
     }
 
     return (
+<<<<<<< HEAD
         <div style={{ marginTop: 20, textAlign: 'center' }}>
             <Swiper
         
@@ -169,6 +170,15 @@ export default function Inquiry(props) {
         spaceBetween={50}
         pagination={{ "type": "progressbar" }}
         >            
+=======
+    
+    <div style={{ marginTop: 20, textAlign: 'center' }}>
+    <Swiper
+    modules={[Navigation, Pagination, Thumbs]}
+    spaceBetween={50}
+    pagination={{ "type": "progressbar" }}
+    >            
+>>>>>>> oma
             {
                 questions.map((question, index) =>
                 <SwiperSlide>
@@ -185,7 +195,11 @@ export default function Inquiry(props) {
                 </Paper>
                 </SwiperSlide>)
             }
+<<<<<<< HEAD
              <SwiperSlide>
+=======
+            <SwiperSlide>
+>>>>>>> oma
                 <Paper style={{ width: '40%', height: 300, margin: 'auto', padding: 50, marginTop: 10, marginBottom: 10, textAlign:'center' }} elevation={3}>
                 <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
                 </Paper>
