@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useParams } from "react-router";
 
 // SWIPER
-import { Navigation, Pagination } from 'swiper';
+import { Navigation, Pagination, Keyboard } from 'swiper';
 // Direct React component imports
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 import { Thumbs } from 'swiper';
@@ -162,23 +162,15 @@ export default function Inquiry(props) {
     }
 
     return (
-<<<<<<< HEAD
         <div style={{ marginTop: 20, textAlign: 'center' }}>
             <Swiper
         
-        modules={[Navigation, Pagination, Thumbs]}
+        modules={[Navigation, Pagination, Keyboard, Thumbs]}
         spaceBetween={50}
+        keyboard={{
+            "enabled": true}}
         pagination={{ "type": "progressbar" }}
         >            
-=======
-    
-    <div style={{ marginTop: 20, textAlign: 'center' }}>
-    <Swiper
-    modules={[Navigation, Pagination, Thumbs]}
-    spaceBetween={50}
-    pagination={{ "type": "progressbar" }}
-    >            
->>>>>>> oma
             {
                 questions.map((question, index) =>
                 <SwiperSlide>
@@ -195,11 +187,7 @@ export default function Inquiry(props) {
                 </Paper>
                 </SwiperSlide>)
             }
-<<<<<<< HEAD
              <SwiperSlide>
-=======
-            <SwiperSlide>
->>>>>>> oma
                 <Paper style={{ width: '40%', height: 300, margin: 'auto', padding: 50, marginTop: 10, marginBottom: 10, textAlign:'center' }} elevation={3}>
                 <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
                 </Paper>
@@ -214,6 +202,7 @@ export default function Inquiry(props) {
         action={action}
         />
         
+
       
         </div>
     )
