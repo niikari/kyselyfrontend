@@ -13,7 +13,7 @@ import Loading from "./Loading";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 // SWIPER
 import { Navigation, Pagination, Keyboard } from 'swiper';
@@ -44,6 +44,8 @@ export default function Inquiry(props) {
 
     // LAITETAAN LÄHETYSNAPPI POIS KÄYTETTÄVISTÄ VASTAUSTEN LÄHETYSTEN JÄLKEEN
     const [disabled, setDisabled] = useState(false)
+
+    const navigate = useNavigate()
 
     // SWIPER THUMB TOIMINTO
     // const [thumbsSwiper, setThumbsSwiper] = React.useState(null);
@@ -107,7 +109,7 @@ export default function Inquiry(props) {
         })
         .then(res => res.json())
         .then(data => {
-            postAnswers(data._links.maker.href)
+            postAnswers(data._links.maker.href, data.id)
             setMaker(data)
             setDisabled(true)
         })
@@ -115,7 +117,7 @@ export default function Inquiry(props) {
     }
 
     // LÄHETETÄÄN BACKENDIIN => MAKER, KYSYMYS JA MAHDOLLINEN AVOIN VASTAUS (SIELLÄ LISÄTAULU VASTAAJAN VASTAUKSILLE)
-    const postAnswers = (makerUrl) => {
+    const postAnswers = (makerUrl, makerId) => {
         answers.forEach(function (answer, index) {
             fetch(`${url}/api/makerAnswers`, {
             method: 'POST',
@@ -139,6 +141,7 @@ export default function Inquiry(props) {
                 setMsg('Hups, jokin meni pieleen...')
             })
         })
+        navigate(`/makeranswers/${makerId}`)
     }
     
     // LISÄTÄÄN ANNETUT VASTAUKSET STATEEN. TÄMÄ FUNKTIO ANNETAAN CHILDIEN KÄYTTÖÖN
@@ -188,8 +191,8 @@ export default function Inquiry(props) {
                 </SwiperSlide>)
             }
              <SwiperSlide>
-                <Paper style={{ width: '40%', height: 300, margin: 'auto', padding: 50, marginTop: 10, marginBottom: 10, textAlign:'center' }} elevation={3}>
-                <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: 30 }} size="large" variant="contained">Lähetä vastaukset</Button>
+                <Paper style={{ width: '50%', height: "auto", margin: 'auto', padding: 50, marginTop: 10, marginBottom: 10, textAlign:'center' }} elevation={3}>
+                <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: "auto" }} size="large" variant="contained">Lähetä vastaukset</Button>
                 </Paper>
                 </SwiperSlide>
             </Swiper>

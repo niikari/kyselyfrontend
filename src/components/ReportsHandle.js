@@ -28,7 +28,6 @@ export default function ReportsHandle(props) {
         const data = _.groupBy(arr, 'question')
         setData(data)
         setLoading(false)
-        console.log(data)
     }
     
     while (loading) {

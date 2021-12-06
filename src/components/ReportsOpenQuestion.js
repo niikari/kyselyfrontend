@@ -14,6 +14,7 @@ export default function ReportsOpenQuestion(props) {
         <>
         <Paper elevation={3}>
             <p><b>{question}</b></p>
+            <p>Annetut vastaukset:</p>
             {
                 answers.map((answer, index) =>
                 <p key={index}>{answer.givenOpenAnswer}</p>)

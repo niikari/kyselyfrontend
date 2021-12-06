@@ -19,20 +19,34 @@ export default function Reports(props) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`${props.url}/reports/${id}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': sessionStorage.getItem('jwt')
-            }
-        })        
-        .then(res => res.json())
-        .then(data => {
-            setData(data)
-            setLoading(false)
-        })
-        .catch(err => {
-            console.error(err)
-        })
+        console.log(props.auth)
+        if (props.auth) {
+            fetch(`${props.url}/${props.what}/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': sessionStorage.getItem('jwt')
+                }
+            })        
+            .then(res => res.json())
+            .then(data => {
+                setData(data)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.error(err)
+            })
+        } else {
+            fetch(`${props.url}/${props.what}/${id}`)        
+            .then(res => res.json())
+            .then(data => {
+                setData(data)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.error(err)
+            })
+        }
+        
     }, [id, navigate, props.url])
 
 
@@ -44,15 +58,12 @@ export default function Reports(props) {
     // JOS VASTAUKSIA EI OLE => RENDERÖIDÄÄN "EI ANNETTUJA VASTAUKSIA VIELÄ, MUUTEN TULEE ERROR"
     return (
         <>
-        {props.auth &&
-            <div style={{ textAlign: 'center' }}>
+        
+        <div style={{ textAlign: 'center' }}>
         <h2>{data[0].answer.question.inquiry.name}</h2>
         <ReportsHandle data={data} mobile={matches} />
         </div>
-        }
-        {
-            props.auth === false && navigate('/login')
-        }
+        
         </>
     )
 }
