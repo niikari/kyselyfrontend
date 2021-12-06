@@ -176,9 +176,9 @@ export default function Inquiry(props) {
         >            
             {
                 questions.map((question, index) =>
-                <SwiperSlide>
+                <SwiperSlide key={index}>
                 
-                <Paper style={{ width: '50%', height: 400, margin: 'auto', padding: 50, marginBottom: 30, textAlign:'left' }} elevation={3} key={index}>
+                <Paper style={{ width: '50%', height: 400, margin: 'auto', padding: 50, marginBottom: 30, textAlign:'left' }} elevation={3} key={question.id}>
                 
                 <FormControl key={index} component="fieldset">
                     <FormLabel component="legend"><b>{question.quest}</b></FormLabel><br></br>
