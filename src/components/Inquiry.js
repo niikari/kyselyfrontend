@@ -134,14 +134,16 @@ export default function Inquiry(props) {
                 if (res.ok) {
                     setMsg('Vastaukset lähetetty')
                     setOpen(true)
+                    
                 }
             })
+            .finally(_ => navigate(`/makeranswers/${makerId}`))
             .catch(err => {
                 console.error(err)
                 setMsg('Hups, jokin meni pieleen...')
             })
         })
-        navigate(`/makeranswers/${makerId}`)
+        
     }
     
     // LISÄTÄÄN ANNETUT VASTAUKSET STATEEN. TÄMÄ FUNKTIO ANNETAAN CHILDIEN KÄYTTÖÖN
@@ -190,10 +192,10 @@ export default function Inquiry(props) {
                 </Paper>
                 </SwiperSlide>)
             }
-             <SwiperSlide>
-                <Paper style={{ width: '50%', height: "auto", margin: 'auto', padding: 50, marginTop: 10, marginBottom: 10, textAlign:'center' }} elevation={3}>
-                <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: "auto" }} size="large" variant="contained">Lähetä vastaukset</Button>
-                </Paper>
+                <SwiperSlide>
+                    <Paper style={{ width: '50%', height: "auto", margin: 'auto', padding: 50, marginTop: 10, marginBottom: 10, textAlign:'center' }} elevation={3}>
+                    <Button startIcon={<SendIcon />} disabled={disabled} onClick={postMakerAndAnswers} style={{ margin: "auto" }} size="large" variant="contained">Lähetä vastaukset</Button>
+                    </Paper>
                 </SwiperSlide>
             </Swiper>
        

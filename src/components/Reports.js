@@ -19,7 +19,6 @@ export default function Reports(props) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log(props.auth)
         if (props.auth) {
             fetch(`${props.url}/${props.what}/${id}`, {
                 method: 'GET',
