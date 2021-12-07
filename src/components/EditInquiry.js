@@ -20,12 +20,15 @@ export default function EditInquiry(props) {
     const [inquiry, setInquiry] = useState({})
     const [questions, setQuestions] = useState([])
     const [loading, setLoading] = useState(true)
+    const [openNewInquiry, setOpenNewInquiry] = useState(false)
+    const [newInquiry, setNewInquiry] = useState('')
+    
 
     const navigate = useNavigate()
 
     //kysymyksen luonti
     const [newQuest, setNewQuest] = useState('')
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false)
 
     //kysymyksien tapa (radio, normi tai open)
     const [multiple, setMultiple] = React.useState(false);
@@ -33,8 +36,6 @@ export default function EditInquiry(props) {
     const [norm, setNorm] = React.useState(true);
 
     useEffect(() =>  fetchInquiry() ,[])
-
-
 
     const fetchInquiry = () => {
         fetch(`${props.url}/api/inquiries/${id}`)
@@ -46,6 +47,23 @@ export default function EditInquiry(props) {
         })
         .catch(err => console.error(err))
     }
+
+    const createInquiry = () => {
+        fetch(`${props.url}/api/inquiries`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('jwt')
+            },
+            body: JSON.stringify({name: newInquiry})
+        })
+        .then(res => res.json())
+        .catch(err => console.error(err))
+        
+        setOpenNewInquiry(false);
+        
+    }
+
 
     const fetchQuestions = (link) => {
         fetch(link)
@@ -159,6 +177,22 @@ export default function EditInquiry(props) {
          style={{marginTop:10}}>
              lisää uusi kysymys
         </Button> 
+
+        <Button 
+        onClick={() => setOpenNewInquiry(true)}
+        color="success"
+        variant="contained" 
+        endIcon={<AddIcon/>} 
+        style={{marginTop:10, marginLeft:10}}>
+             Luo uusi kysely
+        </Button> 
+
+        <Dialog open={openNewInquiry} onClose={() => setOpenNewInquiry(false)}>
+            <DialogContent>
+                <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={(e) => setNewInquiry(e.target.value)} value={newInquiry}/>
+                <Button onClick={createInquiry}>create inquiry</Button>
+            </DialogContent>
+        </Dialog>
 
             <InquiryE
                 inquiry={inquiry} 
