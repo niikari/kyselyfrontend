@@ -35,10 +35,11 @@ export default function EditInquiry(props) {
     const [openQuest, setOpenQuest] = React.useState(false);
     const [norm, setNorm] = React.useState(true);
 
-    useEffect(() =>  fetchInquiry() ,[])
+    useEffect(() =>  fetchInquiry(id) ,[])
 
-    const fetchInquiry = () => {
-        fetch(`${props.url}/api/inquiries/${id}`)
+    const fetchInquiry = (inqId) => {
+        console.log('fetching inquiry')
+        fetch(`${props.url}/api/inquiries/${inqId}`)
         .then(res => res.json())
         .then(data => {
             setInquiry(data)
@@ -58,6 +59,10 @@ export default function EditInquiry(props) {
             body: JSON.stringify({name: newInquiry})
         })
         .then(res => res.json())
+        .then(data => {
+            navigate(`/edit/${data.id}`)
+            fetchInquiry(data.id)
+            })
         .catch(err => console.error(err))
         
         setOpenNewInquiry(false);
@@ -137,8 +142,10 @@ export default function EditInquiry(props) {
         .then(res => {
             if (res.ok) {
                 alert('kysely poistettu')
+                navigate('/')
             }
         })
+        
         .catch(err => console.error(err))
     }
 
