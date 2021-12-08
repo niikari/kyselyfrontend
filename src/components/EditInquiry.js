@@ -108,12 +108,7 @@ export default function EditInquiry(props) {
                 openQuestion:openQuest,
                 normQuestion:norm  })
         })
-        .then(res => {
-            if (res.ok) {
-               fetchInquiry(id);
-            }
-        })
-        
+        .then(res => fetchInquiry(id))
     }
 
     const deleteQuestion = (question) => {
