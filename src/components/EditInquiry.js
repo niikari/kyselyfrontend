@@ -88,7 +88,7 @@ export default function EditInquiry(props) {
         })
         .then(res => {
             if (res.ok) {
-                fetchInquiry()
+                fetchInquiry(id)
             }
         })
         .catch(err => console.error(err))
@@ -110,9 +110,10 @@ export default function EditInquiry(props) {
         })
         .then(res => {
             if (res.ok) {
-               fetchInquiry();
+               fetchInquiry(id);
             }
         })
+        
     }
 
     const deleteQuestion = (question) => {
@@ -125,7 +126,7 @@ export default function EditInquiry(props) {
         })
         .then(res => {
             if (res.ok) {
-                fetchInquiry()
+                fetchInquiry(id)
             }
         })
         .catch(err => console.error(err))
@@ -160,7 +161,7 @@ export default function EditInquiry(props) {
         })
         .then(res => {
             if (res.ok) {
-                fetchInquiry()
+                fetchInquiry(id)
             }
         })
         .catch(err => console.error(err))
@@ -236,7 +237,8 @@ export default function EditInquiry(props) {
                     onChange={() => {
                         setMultiple(true) 
                         setOpenQuest(false)
-                        setNorm(false)}}
+                        setNorm(false)
+                        console.log(1)}}
                     value={1} 
                     control={<Radio />} 
                     label='monivalinta'/>
@@ -245,7 +247,8 @@ export default function EditInquiry(props) {
                     onChange={() => {
                         setOpenQuest(true) 
                         setMultiple(false)
-                        setNorm(false)}}
+                        setNorm(false)
+                        console.log(2)}}
                     value={2} 
                     control={<Radio />} 
                     label='teksti vastaus'/>
@@ -253,7 +256,8 @@ export default function EditInquiry(props) {
                     onChange={() => {
                         setMultiple(false)
                         setOpenQuest(false)
-                        setNorm(true)}}
+                        setNorm(true)
+                        console.log(3)}}
                     value={3}
                     control={<Radio />} 
                     label='tavallinen'/>
