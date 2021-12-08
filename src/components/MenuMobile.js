@@ -55,12 +55,6 @@ export default function MenuMobile(props) {
                 navigate('/')
                 handleClose()
             }}><HomeIcon />Etusivu</MenuItem>
-            {props.auth && 
-                <MenuItem onClick={() => {
-                    navigate('/create')
-                    handleClose()
-                }}><CreateIcon />Luo kysely</MenuItem>
-            }
             {props.auth === false && 
                 <MenuItem onClick={() => {
                     navigate('/login')

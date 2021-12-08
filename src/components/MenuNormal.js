@@ -10,7 +10,6 @@ export default function MenuNormal(props) {
 
     return (
         <>
-        {props.auth && <Link style={{ textDecoration: 'none', marginRight: 10 }} to="/create"><Button startIcon={<AddIcon />} variant="contained">Luo kysely</Button></Link>}
         <Link style={{ textDecoration: 'none', marginRight: 10 }} to="/"><Button variant="contained" startIcon={<HomeIcon />}>Etusivu</Button></Link>
         {props.auth === false && <Link  style={{ textDecoration: 'none' }} to="/login"><Button variant="contained" startIcon={<LoginIcon />}>Kirjaudu</Button></Link>}
         {props.auth && 

@@ -7,7 +7,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Inquiries from "./components/Inquiries";
 import Inquiry from "./components/Inquiry";
-import CreateInquiry from "./components/CreateInquiry";
 import colours from "./images/texture-g9dfd8c623_1920.jpg"
 import Reports from './components/Reports';
 import MenuMobile from "./components/MenuMobile";
@@ -93,8 +92,7 @@ function App() {
         <Routes>
           <Route path="/" exact element={<Inquiries url={url} auth={auth}  />} />
           <Route path="/login" exact element={<Login url={url} login={login}  />} />
-          <Route path="/inquiries/:id" exact element={<Inquiry url={url} />} />
-          <Route path="/create" exact element={<CreateInquiry url={url} auth={auth} />} />          
+          <Route path="/inquiries/:id" exact element={<Inquiry url={url} />} />          
           <Route path="/reports/:id" exact element={<Reports url={url} auth={auth} what="reports" />} />
           <Route path="/edit/:id" exact element={<EditInquiry url={url} auth={auth} />} />
           <Route path="/makeranswers/:id" exact element={<Reports url={url} auth={auth} what="makeranswers" />} />
