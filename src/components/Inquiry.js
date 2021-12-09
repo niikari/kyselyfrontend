@@ -14,6 +14,7 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useParams } from "react-router";
+import './Lintu.css';
 
 // SWIPER
 import { Navigation, Pagination, Keyboard } from 'swiper';
@@ -168,6 +169,25 @@ export default function Inquiry(props) {
 
     return (
         <div style={{ marginTop: 20, textAlign: 'center' }}>
+            <div class="container">
+	
+	
+	        <div class="bird-container bird-container--one">
+		        <div class="bird bird--one"></div>
+	                </div>
+	
+	        <div class="bird-container bird-container--two">
+		        <div class="bird bird--two"></div>
+	                </div>
+
+	        <div class="bird-container bird-container--three">
+		        <div class="bird bird--three"></div>
+	                </div>
+
+	        <div class="bird-container bird-container--four">
+		        <div class="bird bird--four"></div>
+	                </div>
+	    </div>
             <Swiper
         
         modules={[Navigation, Pagination, Keyboard, Thumbs]}
