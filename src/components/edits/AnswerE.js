@@ -26,7 +26,7 @@ export default function AnswerE(props) {
             
         <p>Vastaus: {props.answer.answer}</p>
         <TextField style={{margin:'auto',padding:50, width:'80%'}} onChange={inputChanged} value={name}/>
-        <Button onClick={() => props.editAnswerName(props.answer, name)}>Muuta kysymystä</Button>
+        <Button onClick={() => props.editAnswerName(props.answer, name)}>Muuta Vastausta</Button>
         </Paper>
     )
 }
